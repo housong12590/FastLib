@@ -2,8 +2,6 @@ package com.ws.fastlib.network;
 
 
 import com.ws.fastlib.network.annotation.Service;
-import com.ws.fastlib.network.log.Level;
-import com.ws.fastlib.network.log.LoggingInterceptor;
 import com.ws.fastlib.network.proxy.SchedulersProxy;
 
 import java.lang.reflect.InvocationHandler;
@@ -13,9 +11,13 @@ import java.util.concurrent.TimeUnit;
 
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
+
+//import com.ws.fastlib.network.log.Level;
+//import com.ws.fastlib.network.log.LoggingInterceptor;
 
 public class HttpManager {
 
@@ -33,6 +35,7 @@ public class HttpManager {
             OkHttpClient httpClient = getHttpClient(service);
             retrofit = new Retrofit.Builder().client(httpClient)
                     .addConverterFactory(GsonConverterFactory.create())
+//                    .addConverterFactory(FastJsonConverterFactory.create())
                     .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                     .baseUrl(service.baseUrl()).build();
             mCacheMap.put(clazz.getName(), retrofit);
@@ -60,7 +63,8 @@ public class HttpManager {
             }
         }
         if (service.printLog()) {
-            LoggingInterceptor interceptor = new LoggingInterceptor.Builder().loggable(true).setLevel(Level.BASIC).build();
+            HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
+            interceptor.level(HttpLoggingInterceptor.Level.BODY);
             builder.addInterceptor(interceptor);
         }
         return builder.build();

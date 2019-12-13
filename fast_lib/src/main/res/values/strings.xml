@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">fast_lib</string>
+
+    <string name="loading">网络请求中,请稍等</string>
 </resources>

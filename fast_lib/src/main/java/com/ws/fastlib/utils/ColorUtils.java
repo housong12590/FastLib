@@ -33,4 +33,12 @@ public class ColorUtils {
         int blue = random.nextInt(200) + 30;
         return Color.argb(255, red, green, blue);
     }
+
+    public static int[] getRandColors(int size) {
+        int[] colors = new int[size];
+        for (int i = 0; i < colors.length; i++) {
+            colors[i] = getRandColor();
+        }
+        return colors;
+    }
 }
