@@ -1,7 +1,6 @@
 package com.ws.fastlib;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -26,6 +25,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import androidx.fragment.app.FragmentActivity;
 import io.reactivex.functions.Consumer;
 
 /**
@@ -47,7 +47,7 @@ public class PermissionManager {
      * @param activity activity
      * @param callback 授权成功回调
      */
-    public static void readContacts(Activity activity, OnAuthorizeCallback callback) {
+    public static void readContacts(FragmentActivity activity, OnAuthorizeCallback callback) {
         String[] permissions = {
                 Manifest.permission.READ_CONTACTS,
                 Manifest.permission.GET_ACCOUNTS
@@ -61,7 +61,7 @@ public class PermissionManager {
      * @param activity activity
      * @param callback 授权成功回调
      */
-    public static void storage(Activity activity, OnAuthorizeCallback callback) {
+    public static void storage(FragmentActivity activity, OnAuthorizeCallback callback) {
         String[] permissions = {
                 Manifest.permission.READ_EXTERNAL_STORAGE,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE
@@ -75,7 +75,7 @@ public class PermissionManager {
      * @param activity activity
      * @param callback 授权成功回调
      */
-    public static void camera(Activity activity, OnAuthorizeCallback callback) {
+    public static void camera(FragmentActivity activity, OnAuthorizeCallback callback) {
         String[] permissions = {
                 Manifest.permission.CAMERA
         };
@@ -88,7 +88,7 @@ public class PermissionManager {
      * @param activity activity
      * @param callback 授权成功回调
      */
-    public static void record(Activity activity, OnAuthorizeCallback callback) {
+    public static void record(FragmentActivity activity, OnAuthorizeCallback callback) {
         String[] permissions = {
                 Manifest.permission.RECORD_AUDIO
         };
@@ -102,7 +102,7 @@ public class PermissionManager {
      * @param activity activity
      * @param callback 授权成功回调
      */
-    public static void location(Activity activity, OnAuthorizeCallback callback) {
+    public static void location(FragmentActivity activity, OnAuthorizeCallback callback) {
         String[] permissions = {
                 Manifest.permission.ACCESS_FINE_LOCATION,
                 Manifest.permission.ACCESS_COARSE_LOCATION
@@ -110,7 +110,7 @@ public class PermissionManager {
         request(activity, false, callback, permissions);
     }
 
-    public static void request(Activity activity, boolean showError, OnAuthorizeCallback callback, String... permissions) {
+    public static void request(FragmentActivity activity, boolean showError, OnAuthorizeCallback callback, String... permissions) {
         if (permissions.length == 0) {
             throw new IllegalArgumentException("permissions length is zero");
         }
