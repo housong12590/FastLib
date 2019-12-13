@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 
-
 import com.ws.fastlib.utils.LogUtils;
 import com.ws.fastlib.utils.NetworkUtils;
 
