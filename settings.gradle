@@ -1,2 +1,2 @@
-include ':app', ':fastlib-network', ':fastlib-utils'
+include ':app', ':fast_lib'
 rootProject.name='FastLib'
