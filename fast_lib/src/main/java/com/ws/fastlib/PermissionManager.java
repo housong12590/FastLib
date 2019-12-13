@@ -1,6 +1,7 @@
 package com.ws.fastlib;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -110,6 +111,7 @@ public class PermissionManager {
         request(activity, false, callback, permissions);
     }
 
+    @SuppressLint("CheckResult")
     public static void request(FragmentActivity activity, boolean showError, OnAuthorizeCallback callback, String... permissions) {
         if (permissions.length == 0) {
             throw new IllegalArgumentException("permissions length is zero");
