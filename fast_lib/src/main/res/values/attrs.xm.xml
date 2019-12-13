@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="ToolBarLayout">
+        <attr name="toolBarStyle" format="reference" />
+        <attr name="toolbar_height" format="dimension" />
+        <attr name="toolbar_padding" format="dimension" />
+        <attr name="toolbar_menu_margin" format="dimension" />
+        <attr name="toolbar_background" format="color" />
+        <attr name="toolbar_title_text" format="string" />
+        <attr name="toolbar_title_color" format="color" />
+        <attr name="toolbar_title_size" format="dimension" />
+        <attr name="toolbar_btn_width" format="dimension" />
+        <attr name="toolbar_title_margin" format="dimension" />
+        <attr name="toolbar_back_image" format="reference" />
+        <attr name="toolbar_menu_text_size" format="dimension" />
+        <attr name="toolbar_has_default_back" format="boolean" />
+        <attr name="toolbar_menu_text_color" format="color" />
+        <attr name="toolbar_title_gravity">
+            <enum name="left" value="0" />
+            <enum name="center" value="1" />
+            <enum name="right" value="2" />
+        </attr>
+    </declare-styleable>
+
+    <declare-styleable name="LoadingView">
+        <attr name="loading_size" format="dimension" />
+        <attr name="loading_color" format="color" />
+    </declare-styleable>
+</resources>

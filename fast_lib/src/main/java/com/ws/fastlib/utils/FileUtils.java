@@ -134,4 +134,8 @@ public class FileUtils {
             file.delete();
         }
     }
+
+    public static boolean isFile(String path) {
+        return new File(path).isFile();
+    }
 }
