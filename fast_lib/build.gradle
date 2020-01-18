@@ -49,6 +49,9 @@ dependencies {
     api 'com.squareup.retrofit2:retrofit:2.5.0'
     api 'com.squareup.retrofit2:adapter-rxjava2:2.5.0'
     api 'com.squareup.retrofit2:converter-gson:2.5.0'
+    api "com.github.tamsiree.RxTool:RxKit:v2.4.1"
+    // 工具类库
+    api 'com.blankj:utilcodex:1.26.0'
     // 事件总线
     api 'lib.gorden.rxbus2:rxbus:2.0.1'
     // 图片加载框架
