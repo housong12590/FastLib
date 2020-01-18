@@ -5,7 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.ws.fastlib.LoadStatus;
+import com.ws.fastlib.common.LoadStatus;
 
 import androidx.fragment.app.Fragment;
 import butterknife.ButterKnife;

@@ -4,7 +4,7 @@ import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.ws.fastlib.LoadStatus;
+import com.ws.fastlib.common.LoadStatus;
 import com.ws.fastlib.base.BaseActivity;
 import com.ws.fastlib.base.BaseFragment;
 import com.ws.fastlib.base.BaseListFragment;

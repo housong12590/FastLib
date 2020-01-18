@@ -3,7 +3,7 @@ package com.ws.fastlib.base;
 import android.os.Bundle;
 import android.view.View;
 
-import com.ws.fastlib.LoadStatus;
+import com.ws.fastlib.common.LoadStatus;
 
 public abstract class DelayFragment extends BaseFragment {
 

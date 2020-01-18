@@ -2,7 +2,7 @@ package com.ws.fast;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.ws.fastlib.LoadStatus;
+import com.ws.fastlib.common.LoadStatus;
 import com.ws.fastlib.base.BaseListActivity;
 import com.ws.fastlib.network.HttpManager;
 import com.ws.fastlib.network.Transformer;

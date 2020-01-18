@@ -3,7 +3,7 @@ package com.ws.fastlib.base;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.ws.fastlib.LoadStatus;
+import com.ws.fastlib.common.LoadStatus;
 import com.ws.fastlib.dialog.LoadingDialog;
 import com.ws.fastlib.utils.ActivityUtils;
 

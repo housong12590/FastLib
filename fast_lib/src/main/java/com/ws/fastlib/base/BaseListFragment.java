@@ -6,7 +6,7 @@ import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.ws.fastlib.LoadStatus;
+import com.ws.fastlib.common.LoadStatus;
 import com.ws.fastlib.R;
 import com.ws.fastlib.network.observer.DefaultObserver;
 import com.ws.fastlib.utils.ColorUtils;
@@ -94,7 +94,7 @@ public class BaseListFragment<T> extends DelayFragment implements SwipeRefreshLa
 
     @Override
     public void requestData(LoadStatus status) {
-        this.mCurrentPage = status == LoadStatus.MORE ? ++mCurrentPage : 1;
+        this.mCurrentPage = status == LoadStatus.LOAD_MORE ? ++mCurrentPage : 1;
         if (status == LoadStatus.LOADING) {
             mLoadingStateView.showLoadingView();
         }
@@ -121,7 +121,7 @@ public class BaseListFragment<T> extends DelayFragment implements SwipeRefreshLa
                     if (mView.isLoadMoreEnable()) {
                         mAdapter.loadMoreComplete();
                     }
-                } else if (status == LoadStatus.MORE) {
+                } else if (status == LoadStatus.LOAD_MORE) {
                     mAdapter.addData(ts);
                     if (ts.isEmpty() || ts.size() < PAGE_SIZE || mCurrentPage >= mTotalPage) {
                         mAdapter.loadMoreEnd(mAdapter.getData().size() < PAGE_SIZE);
@@ -138,14 +138,13 @@ public class BaseListFragment<T> extends DelayFragment implements SwipeRefreshLa
                     mLoadingStateView.showErrorView();//失败重试
                 } else if (status == LoadStatus.REFRESH) {
                     mSwipeRefreshLayout.setRefreshing(false); //下拉刷新完成
-                } else if (status == LoadStatus.MORE) {
+                } else if (status == LoadStatus.LOAD_MORE) {
                     mAdapter.loadMoreFail(); // 加载更多失败
                 }
             }
         });
     }
 
-    @Override
     public void setTotalPage(int totalPage) {
         this.mTotalPage = totalPage;
     }
@@ -173,7 +172,7 @@ public class BaseListFragment<T> extends DelayFragment implements SwipeRefreshLa
 
     @Override
     public void onLoadMoreRequested() {
-        requestData(LoadStatus.MORE);
+        requestData(LoadStatus.LOAD_MORE);
     }
 
     @Override
