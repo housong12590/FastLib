@@ -7,7 +7,7 @@ import io.reactivex.Single;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 
-@Service(baseUrl = "http://192.168.10.21:8080",printLog = true)
+@Service(baseUrl = "http://192.168.10.21:8080")
 public interface Api {
 
     @GET("draft/list")

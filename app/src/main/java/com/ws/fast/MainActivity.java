@@ -2,8 +2,9 @@ package com.ws.fast;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.ws.fastlib.common.LoadStatus;
+import com.vector.update_app.UpdateAppManager;
 import com.ws.fastlib.base.BaseListActivity;
+import com.ws.fastlib.common.LoadStatus;
 import com.ws.fastlib.network.HttpManager;
 import com.ws.fastlib.network.Transformer;
 
@@ -14,6 +15,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import io.reactivex.Single;
 
 public class MainActivity extends BaseListActivity<DraftResult.ListBean> {
+
+    @Override
+    public void initData() {
+        new UpdateAppManager.Builder().setActivity(mContext)
+                .setUpdateUrl("")
+                .setHttpManager(null)
+                .build()
+                .update();
+    }
 
     @Override
     public BaseQuickAdapter<DraftResult.ListBean, BaseViewHolder> getAdapter() {
