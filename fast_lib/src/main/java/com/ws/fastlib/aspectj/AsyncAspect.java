@@ -2,6 +2,7 @@ package com.ws.fastlib.aspectj;
 
 
 import com.ws.fastlib.aspectj.annotation.Async;
+import com.ws.fastlib.utils.ThreadPools;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -27,15 +28,15 @@ public class AsyncAspect {
             return;
         }
 
-//        ThreadPools.execute(new Runnable() {
-//            @Override
-//            public void run() {
-//                try {
-//                    joinPoint.proceed();
-//                } catch (Throwable throwable) {
-//                    throw new RuntimeException(throwable.getMessage());
-//                }
-//            }
-//        });
+        ThreadPools.execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    joinPoint.proceed();
+                } catch (Throwable throwable) {
+                    throw new RuntimeException(throwable.getMessage());
+                }
+            }
+        });
     }
 }
