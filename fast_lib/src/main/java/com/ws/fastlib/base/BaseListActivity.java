@@ -19,6 +19,7 @@ import java.util.List;
 
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import io.reactivex.Single;
 import io.reactivex.disposables.Disposable;
 
@@ -92,7 +93,7 @@ public abstract class BaseListActivity<T> extends BaseActivity implements SwipeR
         if (status == LoadStatus.LOADING) {
             mLoadingStateView.showLoadingView();
         }
-        requestApi(status, String.valueOf(currentPage)).subscribe(new DefaultObserver<List<T>>() {
+        requestApi(status, currentPage).subscribe(new DefaultObserver<List<T>>() {
 
             @Override
             public void onSubscribe(Disposable d) {
@@ -145,7 +146,7 @@ public abstract class BaseListActivity<T> extends BaseActivity implements SwipeR
 
     public abstract RecyclerView.ItemDecoration getItemDecoration();
 
-    public abstract Single<List<T>> requestApi(LoadStatus status, String currNum);
+    public abstract Single<List<T>> requestApi(LoadStatus status, int currNum);
 
     public abstract boolean isLoadMoreEnable();
 

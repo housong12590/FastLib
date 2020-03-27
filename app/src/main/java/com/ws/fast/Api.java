@@ -7,11 +7,11 @@ import io.reactivex.Single;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 
-@Service(baseUrl = "http://192.168.10.21:8080")
+@Service(baseUrl = "https://api.ciinweb.com/bc/")
 public interface Api {
 
     @GET("draft/list")
     Single<Result<DraftResult>> getDraftList(@Query("tag_id") String tagId,
-                                             @Query("page") String page,
-                                             @Query("page_size") String pageSize);
+                                             @Query("page") int page,
+                                             @Query("page_size") int pageSize);
 }

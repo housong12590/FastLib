@@ -11,13 +11,14 @@ import java.util.List;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import io.reactivex.Single;
 
 public class MainActivity extends BaseListActivity<DraftResult.ListBean> {
 
     @Override
     public void initData() {
-     ;
+        ;
     }
 
     @Override
@@ -36,8 +37,8 @@ public class MainActivity extends BaseListActivity<DraftResult.ListBean> {
     }
 
     @Override
-    public Single<List<DraftResult.ListBean>> requestApi(LoadStatus status, String currNum) {
-        return HttpManager.getService(Api.class).getDraftList("2000", currNum, "15")
+    public Single<List<DraftResult.ListBean>> requestApi(LoadStatus status, int currNum) {
+        return HttpManager.getService(Api.class).getDraftList("2000", currNum, 30)
                 .compose(Transformer.resultFunc())
                 .doOnSuccess(draftResult -> setTotalPage(draftResult.getTotal_page()))
                 .map(DraftResult::getList);

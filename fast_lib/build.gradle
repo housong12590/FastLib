@@ -38,7 +38,7 @@ dependencies {
     // android官方ui扩展包
     api "com.android.support:appcompat-v7:28.0.1"
     api "com.android.support:design:28.0.1"
-    compileOnly 'com.google.code.gson:gson:2.8.6'
+//    api 'com.google.code.gson:gson:2.8.6'
     api 'com.alibaba:fastjson:1.2.62'
     // 异步响应式框架
     api 'io.reactivex.rxjava2:rxjava:2.2.8'

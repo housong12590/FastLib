@@ -11,6 +11,6 @@ public class TestAdapter extends BaseQuickAdapter<DraftResult.ListBean, BaseView
 
     @Override
     protected void convert(BaseViewHolder helper, DraftResult.ListBean item) {
-        helper.setText(R.id.text, item.getTitle());
+        helper.setText(R.id.text, item.getText());
     }
 }
