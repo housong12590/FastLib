@@ -3,19 +3,17 @@ package com.ws.fastlib.base;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.ws.fastlib.common.LoadStatus;
 import com.ws.fastlib.dialog.LoadingDialog;
 import com.ws.fastlib.utils.ActivityUtils;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 import gorden.rxbus2.RxBus;
 
 public abstract class BaseActivity extends AppCompatActivity {
 
-    private Unbinder mBind;
     public AppCompatActivity mContext;
     private LoadingDialog mLoadingDialog;
     protected int PAGE_SIZE = 5;
@@ -27,7 +25,6 @@ public abstract class BaseActivity extends AppCompatActivity {
         ActivityUtils.addActivity(this);
         this.mContext = this;
         setContentView(getLayoutId());
-        mBind = ButterKnife.bind(this);
         parseIntent(getIntent());
         init();
     }
@@ -71,7 +68,6 @@ public abstract class BaseActivity extends AppCompatActivity {
         super.onDestroy();
         RxBus.get().unRegister(this);
         ActivityUtils.removeActivity(this);
-        mBind.unbind();
         mContext = null;
     }
 }

@@ -5,16 +5,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.fragment.app.Fragment;
+
 import com.ws.fastlib.common.LoadStatus;
 
-import androidx.fragment.app.Fragment;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 import gorden.rxbus2.RxBus;
 
 public abstract class BaseFragment extends Fragment {
 
-    private Unbinder mBind;
     protected View mContentView;
     protected int PAGE_SIZE = 15;
 
@@ -38,7 +36,6 @@ public abstract class BaseFragment extends Fragment {
         if (parent != null) {
             parent.removeView(mContentView);
         }
-        mBind = ButterKnife.bind(this, mContentView);
         initView();
         return mContentView;
     }
@@ -68,9 +65,6 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (mBind != null) {
-            mBind.unbind();
-        }
         RxBus.get().unRegister(this);
     }
 
