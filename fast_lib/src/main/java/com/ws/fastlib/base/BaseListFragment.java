@@ -4,6 +4,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
@@ -138,11 +139,13 @@ public abstract class BaseListFragment<T> extends DelayFragment implements Swipe
         });
     }
 
-    public abstract RecyclerView.LayoutManager getLayoutManager();
-
     public abstract BaseQuickAdapter<T, BaseViewHolder> getAdapter();
 
     public abstract Single<List<T>> requestApi(LoadStatus status, int currPage);
+
+    public RecyclerView.LayoutManager getLayoutManager() {
+        return new LinearLayoutManager(getContext());
+    }
 
     public RecyclerView.ItemDecoration getItemDecoration() {
         return null;

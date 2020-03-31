@@ -5,10 +5,14 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.ws.fastlib.common.LoadStatus;
 import com.ws.fastlib.R;
+import com.ws.fastlib.common.LoadStatus;
 import com.ws.fastlib.network.observer.DefaultObserver;
 import com.ws.fastlib.utils.ColorUtils;
 import com.ws.fastlib.widget.CustomLoadMoreView;
@@ -16,9 +20,6 @@ import com.ws.fastlib.widget.LoadingStateView;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import io.reactivex.Single;
 import io.reactivex.disposables.Disposable;
@@ -142,15 +143,25 @@ public abstract class BaseListActivity<T> extends BaseActivity implements SwipeR
 
     public abstract BaseQuickAdapter<T, BaseViewHolder> getAdapter();
 
-    public abstract RecyclerView.LayoutManager getLayoutManager();
-
-    public abstract RecyclerView.ItemDecoration getItemDecoration();
 
     public abstract Single<List<T>> requestApi(LoadStatus status, int currNum);
 
-    public abstract boolean isLoadMoreEnable();
+    public RecyclerView.LayoutManager getLayoutManager() {
+        return new LinearLayoutManager(mContext);
+    }
 
-    public abstract RecyclerView.OnItemTouchListener onItemTouchListener();
+    public RecyclerView.ItemDecoration getItemDecoration() {
+        return null;
+    }
+
+
+    public boolean isLoadMoreEnable() {
+        return true;
+    }
+
+    public RecyclerView.OnItemTouchListener onItemTouchListener() {
+        return null;
+    }
 
     protected void setTotalPage(int totalPage) {
         this.mTotalPage = totalPage;
