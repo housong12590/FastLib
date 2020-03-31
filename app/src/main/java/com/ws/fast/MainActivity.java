@@ -1,5 +1,8 @@
 package com.ws.fast;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.ws.fastlib.base.BaseListActivity;
@@ -9,16 +12,13 @@ import com.ws.fastlib.network.Transformer;
 
 import java.util.List;
 
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import io.reactivex.Single;
 
 public class MainActivity extends BaseListActivity<DraftResult.ListBean> {
 
     @Override
     public void initData() {
-        ;
+
     }
 
     @Override

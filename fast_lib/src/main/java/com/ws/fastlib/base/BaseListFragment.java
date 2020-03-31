@@ -4,10 +4,13 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.ws.fastlib.common.LoadStatus;
 import com.ws.fastlib.R;
+import com.ws.fastlib.common.LoadStatus;
 import com.ws.fastlib.network.observer.DefaultObserver;
 import com.ws.fastlib.utils.ColorUtils;
 import com.ws.fastlib.widget.CustomLoadMoreView;
@@ -16,11 +19,10 @@ import com.ws.fastlib.widget.LoadingStateView;
 import java.util.ArrayList;
 import java.util.List;
 
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+import io.reactivex.Single;
 import io.reactivex.disposables.Disposable;
 
-public class BaseListFragment<T> extends DelayFragment implements SwipeRefreshLayout.OnRefreshListener,
+public abstract class BaseListFragment<T> extends DelayFragment implements SwipeRefreshLayout.OnRefreshListener,
         BaseQuickAdapter.RequestLoadMoreListener {
 
     private RecyclerView mRecyclerView;
@@ -31,15 +33,6 @@ public class BaseListFragment<T> extends DelayFragment implements SwipeRefreshLa
     private int mCurrentPage = 1;
     private int mTotalPage = Integer.MAX_VALUE;
     private List<T> mData = new ArrayList<>();
-    private ListPage<T> mView;
-
-    public static <T> BaseFragment newInstance(ListPage<T> view) {
-        return new BaseListFragment<>(view);
-    }
-
-    private BaseListFragment(ListPage<T> view) {
-        this.mView = view;
-    }
 
     @Override
     public int getLayoutId() {
@@ -57,21 +50,21 @@ public class BaseListFragment<T> extends DelayFragment implements SwipeRefreshLa
         mSwipeRefreshLayout.setSize(SwipeRefreshLayout.DEFAULT);
         mSwipeRefreshLayout.setOnRefreshListener(this);
 
-        RecyclerView.LayoutManager layoutManager = mView.getLayoutManager();
+        RecyclerView.LayoutManager layoutManager = getLayoutManager();
         if (layoutManager != null) {
             mRecyclerView.setLayoutManager(layoutManager);
         }
 
-        RecyclerView.ItemDecoration itemDecoration = mView.getItemDecoration();
+        RecyclerView.ItemDecoration itemDecoration = getItemDecoration();
         if (itemDecoration != null) {
             mRecyclerView.addItemDecoration(itemDecoration);
         }
 
-        RecyclerView.OnItemTouchListener onItemTouchListener = mView.onItemTouchListener();
+        RecyclerView.OnItemTouchListener onItemTouchListener = onItemTouchListener();
         if (onItemTouchListener != null) {
             mRecyclerView.addOnItemTouchListener(onItemTouchListener);
         }
-        mAdapter = mView.getAdapter();
+        mAdapter = getAdapter();
         if (mAdapter == null) {
             throw new NullPointerException("Please set the adapter first");
         }
@@ -82,7 +75,7 @@ public class BaseListFragment<T> extends DelayFragment implements SwipeRefreshLa
         mAdapter.setPreLoadNumber(3);
         mAdapter.setNewData(mData);
         mRecyclerView.setAdapter(mAdapter);
-        if (mView.isLoadMoreEnable()) {
+        if (isLoadMoreEnable()) {
             mAdapter.loadMoreEnd(true);
         }
     }
@@ -98,7 +91,7 @@ public class BaseListFragment<T> extends DelayFragment implements SwipeRefreshLa
         if (status == LoadStatus.LOADING) {
             mLoadingStateView.showLoadingView();
         }
-        mView.requestApi(status, String.valueOf(mCurrentPage)).subscribe(new DefaultObserver<List<T>>() {
+        requestApi(status, mCurrentPage).subscribe(new DefaultObserver<List<T>>() {
 
             @Override
             public void onSubscribe(Disposable d) {
@@ -118,7 +111,7 @@ public class BaseListFragment<T> extends DelayFragment implements SwipeRefreshLa
                     mAdapter.addData(ts);
                     mSwipeRefreshLayout.setRefreshing(false);
                     mLoadingStateView.showContentView();
-                    if (mView.isLoadMoreEnable()) {
+                    if (isLoadMoreEnable()) {
                         mAdapter.loadMoreComplete();
                     }
                 } else if (status == LoadStatus.LOAD_MORE) {
@@ -143,6 +136,24 @@ public class BaseListFragment<T> extends DelayFragment implements SwipeRefreshLa
                 }
             }
         });
+    }
+
+    public abstract RecyclerView.LayoutManager getLayoutManager();
+
+    public abstract BaseQuickAdapter<T, BaseViewHolder> getAdapter();
+
+    public abstract Single<List<T>> requestApi(LoadStatus status, int currPage);
+
+    public RecyclerView.ItemDecoration getItemDecoration() {
+        return null;
+    }
+
+    public boolean isLoadMoreEnable() {
+        return false;
+    }
+
+    public RecyclerView.OnItemTouchListener onItemTouchListener() {
+        return null;
     }
 
     public void setTotalPage(int totalPage) {
