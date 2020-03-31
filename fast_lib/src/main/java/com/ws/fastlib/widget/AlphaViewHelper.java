@@ -17,8 +17,8 @@ public class AlphaViewHelper {
     private boolean mChangeAlphaWhenDisable = true;
 
     private float mNormalAlpha = 1f;
-    private float mPressedAlpha = .5f;
-    private float mDisabledAlpha = .5f;
+    private float mPressedAlpha = .8f;
+    private float mDisabledAlpha = .3f;
 
     public AlphaViewHelper(View target) {
         mTarget = target;
