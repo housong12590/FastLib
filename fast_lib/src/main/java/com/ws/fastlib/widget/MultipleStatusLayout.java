@@ -10,7 +10,7 @@ import android.widget.FrameLayout;
 import com.ws.fastlib.R;
 
 
-public class LoadingStateView extends FrameLayout {
+public class MultipleStatusLayout extends FrameLayout {
 
     private View mLoadingView;
     private View mErrorView;
@@ -20,7 +20,7 @@ public class LoadingStateView extends FrameLayout {
     public static int ERROR_LAYOUT_ID = R.layout.loading_error_layout;
     public static int EMPTY_LAYOUT_ID = R.layout.loading_empyt_layout;
 
-    public LoadingStateView(View view) {
+    public MultipleStatusLayout(View view) {
         super(view.getContext());
         mContentView = view;
         ViewGroup parent = (ViewGroup) view.getParent();
@@ -66,11 +66,11 @@ public class LoadingStateView extends FrameLayout {
         mLoadingView.setVisibility(GONE);
     }
 
-    public LoadingStateView(Context context, AttributeSet attrs) {
+    public MultipleStatusLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public LoadingStateView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public MultipleStatusLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 

@@ -5,47 +5,49 @@ import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
+import androidx.databinding.ViewDataBinding;
 
-import com.ws.fastlib.common.LoadStatus;
 import com.ws.fastlib.dialog.LoadingDialog;
 import com.ws.fastlib.utils.ActivityUtils;
 
 import gorden.rxbus2.RxBus;
 
-public abstract class BaseActivity extends AppCompatActivity {
+public abstract class BaseActivity<DataBinding extends ViewDataBinding> extends AppCompatActivity {
 
-    public AppCompatActivity mContext;
+    protected AppCompatActivity mContext;
+    protected DataBinding mDataBinding;
     private LoadingDialog mLoadingDialog;
-    protected int PAGE_SIZE = 5;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         RxBus.get().register(this);
         ActivityUtils.addActivity(this);
-        this.mContext = this;
-        setContentView(getLayoutId());
+        mContext = this;
+        mDataBinding = DataBindingUtil.setContentView(mContext, getLayoutId());
+        mDataBinding.setLifecycleOwner(this);
         parseIntent(getIntent());
         init();
     }
 
-    protected void init() {
-        initView();
+    private void init() {
+        initView(mDataBinding);
         initData();
-        requestData(LoadStatus.LOADING);
-    }
-
-    public abstract int getLayoutId();
-
-    public abstract void initView();
-
-    public abstract void initData();
-
-    public void requestData(LoadStatus status) {
     }
 
     public void parseIntent(Intent intent) {
 
+    }
+
+    protected abstract int getLayoutId();
+
+    protected abstract void initView(DataBinding dataBinding);
+
+    public abstract void initData();
+
+    public DataBinding getBinding() {
+        return mDataBinding;
     }
 
     public void showDialog() {

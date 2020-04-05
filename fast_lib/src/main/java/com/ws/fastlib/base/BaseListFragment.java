@@ -12,10 +12,11 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.ws.fastlib.R;
 import com.ws.fastlib.common.LoadStatus;
+import com.ws.fastlib.databinding.FragmentBaseListBinding;
 import com.ws.fastlib.network.observer.DefaultObserver;
 import com.ws.fastlib.utils.ColorUtils;
 import com.ws.fastlib.widget.CustomLoadMoreView;
-import com.ws.fastlib.widget.LoadingStateView;
+import com.ws.fastlib.widget.MultipleStatusLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,30 +24,33 @@ import java.util.List;
 import io.reactivex.Single;
 import io.reactivex.disposables.Disposable;
 
-public abstract class BaseListFragment<T> extends DelayFragment implements SwipeRefreshLayout.OnRefreshListener,
+// 如果需要实现懒加载 在FragmentPagerAdapter在使用两个参数的构造方法, super(fm, FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
+public abstract class BaseListFragment<T> extends BaseFragment<FragmentBaseListBinding> implements SwipeRefreshLayout.OnRefreshListener,
         BaseQuickAdapter.RequestLoadMoreListener {
 
     private RecyclerView mRecyclerView;
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private BaseQuickAdapter<T, BaseViewHolder> mAdapter;
-    private LoadingStateView mLoadingStateView;
+    private MultipleStatusLayout mMultipleStatusLayout;
     private Disposable mDisposable;
     private int mCurrentPage = 1;
+    private boolean isLoadData = false;
     private int mTotalPage = Integer.MAX_VALUE;
+    private int PAGE_SIZE = 20;
     private List<T> mData = new ArrayList<>();
 
     @Override
     public int getLayoutId() {
-        return R.layout.activity_base_list_layout;
+        return R.layout.fragment_base_list;
     }
 
     @Override
-    public void initView() {
-        mRecyclerView = mContentView.findViewById(R.id.recyclerView);
-        mSwipeRefreshLayout = mContentView.findViewById(R.id.swipeRefreshLayout);
+    public void initView(FragmentBaseListBinding binding) {
+        mRecyclerView = binding.recyclerView;
+        mSwipeRefreshLayout = binding.swipeRefreshLayout;
 
-        mLoadingStateView = new LoadingStateView(mSwipeRefreshLayout);
-        mLoadingStateView.setOnErrorClickListener(R.id.bt_retry, v -> requestData(LoadStatus.REFRESH));
+        mMultipleStatusLayout = new MultipleStatusLayout(mSwipeRefreshLayout);
+        mMultipleStatusLayout.setOnErrorClickListener(R.id.bt_retry, v -> requestData(LoadStatus.REFRESH));
         mSwipeRefreshLayout.setColorSchemeColors(ColorUtils.getRandColors(3));
         mSwipeRefreshLayout.setSize(SwipeRefreshLayout.DEFAULT);
         mSwipeRefreshLayout.setOnRefreshListener(this);
@@ -90,7 +94,7 @@ public abstract class BaseListFragment<T> extends DelayFragment implements Swipe
     public void requestData(LoadStatus status) {
         this.mCurrentPage = status == LoadStatus.LOAD_MORE ? ++mCurrentPage : 1;
         if (status == LoadStatus.LOADING) {
-            mLoadingStateView.showLoadingView();
+            mMultipleStatusLayout.showLoadingView();
         }
         requestApi(status, mCurrentPage).subscribe(new DefaultObserver<List<T>>() {
 
@@ -102,16 +106,17 @@ public abstract class BaseListFragment<T> extends DelayFragment implements Swipe
 
             @Override
             public void onSuccess(List<T> ts) {
+                isLoadData = true;
                 if (status == LoadStatus.LOADING) {
                     mData.clear();
-                    mLoadingStateView.showContentView();
+                    mMultipleStatusLayout.showContentView();
                     mAdapter.addData(ts);
                     mAdapter.disableLoadMoreIfNotFullPage();
                 } else if (status == LoadStatus.REFRESH) {
                     mData.clear();
                     mAdapter.addData(ts);
                     mSwipeRefreshLayout.setRefreshing(false);
-                    mLoadingStateView.showContentView();
+                    mMultipleStatusLayout.showContentView();
                     if (isLoadMoreEnable()) {
                         mAdapter.loadMoreComplete();
                     }
@@ -129,7 +134,7 @@ public abstract class BaseListFragment<T> extends DelayFragment implements Swipe
             public void onError(Throwable e) {
                 super.onError(e);
                 if (status == LoadStatus.LOADING) {
-                    mLoadingStateView.showErrorView();//失败重试
+                    mMultipleStatusLayout.showErrorView();//失败重试
                 } else if (status == LoadStatus.REFRESH) {
                     mSwipeRefreshLayout.setRefreshing(false); //下拉刷新完成
                 } else if (status == LoadStatus.LOAD_MORE) {
@@ -175,6 +180,10 @@ public abstract class BaseListFragment<T> extends DelayFragment implements Swipe
         return "当前无数据哦...";
     }
 
+    public RecyclerView getRecyclerView() {
+        return mRecyclerView;
+    }
+
     public int setEmptyIcon() {
         return R.drawable.ic_placeholder;
     }
@@ -188,6 +197,15 @@ public abstract class BaseListFragment<T> extends DelayFragment implements Swipe
     public void onLoadMoreRequested() {
         requestData(LoadStatus.LOAD_MORE);
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (!isLoadData) {
+            requestData(LoadStatus.LOADING);
+        }
+    }
+
 
     @Override
     public void onDestroy() {

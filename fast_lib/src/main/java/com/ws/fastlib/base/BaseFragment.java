@@ -5,20 +5,32 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
+import androidx.databinding.ViewDataBinding;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.ws.fastlib.common.LoadStatus;
 
 import gorden.rxbus2.RxBus;
 
-public abstract class BaseFragment extends Fragment {
+public abstract class BaseFragment<DataBinding extends ViewDataBinding> extends Fragment {
 
-    protected View mContentView;
-    protected int PAGE_SIZE = 15;
+    protected DataBinding mDataBinding;
+    private View mContentView;
 
+    public static void attachToContainer(AppCompatActivity activity, int container, Fragment fragment) {
+        FragmentManager fm = activity.getSupportFragmentManager();
+        FragmentTransaction transaction = fm.beginTransaction();
+        transaction.replace(container, fragment);
+        transaction.commit();
+    }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Bundle arguments = getArguments();
         RxBus.get().register(this);
@@ -29,29 +41,14 @@ public abstract class BaseFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        if (mContentView == null) {
-            mContentView = inflater.inflate(getLayoutId(), null);
-        }
+        mDataBinding = DataBindingUtil.inflate(inflater, getLayoutId(), container, false);
+        mContentView = mDataBinding.getRoot();
         ViewGroup parent = (ViewGroup) mContentView.getParent();
         if (parent != null) {
             parent.removeView(mContentView);
         }
-        initView();
+        initView(mDataBinding);
         return mContentView;
-    }
-
-    public void parseIntent(Bundle bundle) {
-
-    }
-
-    public abstract int getLayoutId();
-
-    public abstract void initView();
-
-    public abstract void initData();
-
-    public void requestData(LoadStatus status) {
-
     }
 
     @Override
@@ -61,11 +58,25 @@ public abstract class BaseFragment extends Fragment {
         requestData(LoadStatus.LOADING);
     }
 
+    protected abstract int getLayoutId();
+
+    protected abstract void initView(DataBinding binding);
+
+    protected abstract void initData();
+
+    public void parseIntent(Bundle bundle) {
+
+    }
+
+    public void requestData(LoadStatus status) {
+
+    }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
         RxBus.get().unRegister(this);
     }
+
 
 }

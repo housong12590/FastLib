@@ -1,11 +1,11 @@
 package com.ws.fast;
 
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.ws.fastlib.base.BaseListActivity;
+import com.ws.fast.databinding.ActivityMainBinding;
+import com.ws.fastlib.base.BaseActivity;
+import com.ws.fastlib.base.BaseFragment;
+import com.ws.fastlib.base.BaseListFragment;
 import com.ws.fastlib.common.LoadStatus;
 import com.ws.fastlib.network.HttpManager;
 import com.ws.fastlib.network.Transformer;
@@ -14,43 +14,42 @@ import java.util.List;
 
 import io.reactivex.Single;
 
-public class MainActivity extends BaseListActivity<DraftResult.ListBean> {
+public class MainActivity extends BaseActivity<ActivityMainBinding> {
+
+    @Override
+    protected int getLayoutId() {
+        return R.layout.activity_main;
+    }
+
+    @Override
+    protected void initView(ActivityMainBinding binding) {
+        BaseFragment.attachToContainer(mContext, R.id.contentLayout, new DraftFragment());
+    }
 
     @Override
     public void initData() {
 
     }
 
-    @Override
-    public BaseQuickAdapter<DraftResult.ListBean, BaseViewHolder> getAdapter() {
-        return new TestAdapter();
+    public static class DraftFragment extends BaseListFragment<BgmResult.ListBean> {
+
+        @Override
+        public BaseQuickAdapter<BgmResult.ListBean, BaseViewHolder> getAdapter() {
+            return new TestAdapter();
+        }
+
+        @Override
+        public Single<List<BgmResult.ListBean>> requestApi(LoadStatus status, int currPage) {
+            return HttpManager.getService(Api.class).getBgmList(currPage, 20)
+                    .compose(Transformer.resultFunc())
+                    .doOnSuccess(bgmResult -> setTotalPage(bgmResult.getTotal_page()))
+                    .map(BgmResult::getList);
+        }
+
+        @Override
+        public boolean isLoadMoreEnable() {
+            return true;
+        }
     }
 
-    @Override
-    public RecyclerView.LayoutManager getLayoutManager() {
-        return new LinearLayoutManager(mContext);
-    }
-
-    @Override
-    public RecyclerView.ItemDecoration getItemDecoration() {
-        return null;
-    }
-
-    @Override
-    public Single<List<DraftResult.ListBean>> requestApi(LoadStatus status, int currNum) {
-        return HttpManager.getService(Api.class).getDraftList("2000", currNum, 30)
-                .compose(Transformer.resultFunc())
-                .doOnSuccess(draftResult -> setTotalPage(draftResult.getTotal_page()))
-                .map(DraftResult::getList);
-    }
-
-    @Override
-    public boolean isLoadMoreEnable() {
-        return true;
-    }
-
-    @Override
-    public RecyclerView.OnItemTouchListener onItemTouchListener() {
-        return null;
-    }
 }
