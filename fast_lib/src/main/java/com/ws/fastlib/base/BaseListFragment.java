@@ -118,7 +118,8 @@ public abstract class BaseListFragment<T> extends BaseFragment<FragmentBaseListB
                     mSwipeRefreshLayout.setRefreshing(false);
                     mMultipleStatusLayout.showContentView();
                     if (isLoadMoreEnable()) {
-                        mAdapter.loadMoreComplete();
+                        mAdapter.setEnableLoadMore(true);
+//                        mAdapter.loadMoreComplete();
                     }
                 } else if (status == LoadStatus.LOAD_MORE) {
                     mAdapter.addData(ts);
