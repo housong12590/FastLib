@@ -9,7 +9,7 @@
         android:layout_height="80dp"
         android:background="@drawable/shape_loading_dialog_bg">
 
-        <com.ciin.common.widget.LoadingView
+        <com.ws.fastlib.widget.LoadingView
             android:id="@+id/loadingView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
