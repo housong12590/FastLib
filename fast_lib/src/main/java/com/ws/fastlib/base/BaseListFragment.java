@@ -80,12 +80,12 @@ public abstract class BaseListFragment<T> extends BaseFragment<FragmentBaseListB
         mRecyclerView.setAdapter(mAdapter);
         // 启用加载更多
         if (isLoadMoreEnable()) {
-            mAdapter.setOnLoadMoreListener(this,mRecyclerView);
+            mAdapter.setOnLoadMoreListener(this, mRecyclerView);
             mAdapter.disableLoadMoreIfNotFullPage();
             mAdapter.setPreLoadNumber(3);
             mAdapter.setLoadMoreView(getLoadMoreView());
-            mAdapter.setEnableLoadMore(true);
         }
+        mAdapter.setEnableLoadMore(isLoadMoreEnable());
     }
 
     @Override
