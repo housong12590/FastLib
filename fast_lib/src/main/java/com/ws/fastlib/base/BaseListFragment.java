@@ -74,12 +74,13 @@ public abstract class BaseListFragment<T> extends BaseFragment<FragmentBaseListB
         if (mAdapter == null) {
             throw new NullPointerException("Please set the adapter first");
         }
+        mAdapter.bindToRecyclerView(mRecyclerView);
         mAdapter.setEmptyView(setupEmptyView());
         mAdapter.setNewData(mData);
         mRecyclerView.setAdapter(mAdapter);
         // 启用加载更多
         if (isLoadMoreEnable()) {
-            mAdapter.setOnLoadMoreListener(this, mRecyclerView);
+            mAdapter.setOnLoadMoreListener(this,mRecyclerView);
             mAdapter.disableLoadMoreIfNotFullPage();
             mAdapter.setPreLoadNumber(3);
             mAdapter.setLoadMoreView(getLoadMoreView());
