@@ -9,9 +9,9 @@ import com.ws.fastlib.common.LoadStatus;
 
 public abstract class DelayFragment<DataBinding extends ViewDataBinding> extends BaseFragment<DataBinding> {
 
-    protected boolean isCreated;
-    protected boolean isVisibleToUser;
-    protected boolean isLoad;
+    private boolean isCreated;
+    private boolean isVisibleToUser;
+    private boolean isLoad;
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
@@ -27,7 +27,7 @@ public abstract class DelayFragment<DataBinding extends ViewDataBinding> extends
         lazyLoad();
     }
 
-    public void lazyLoad() {
+    private void lazyLoad() {
         if (isVisibleToUser && isCreated && !isLoad) {
             requestData(LoadStatus.LOADING);
             isLoad = true;

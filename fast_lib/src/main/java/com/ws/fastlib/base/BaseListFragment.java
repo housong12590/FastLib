@@ -112,7 +112,6 @@ public abstract class BaseListFragment<T> extends DelayFragment<FragmentBaseList
                     mData = ts;
                     mMultipleStatusLayout.showContentView();
                     mAdapter.setNewData(mData);
-                    mAdapter.disableLoadMoreIfNotFullPage();
                 } else if (status == LoadStatus.REFRESH) {
                     mData = ts;
                     mAdapter.setNewData(mData);
@@ -159,7 +158,7 @@ public abstract class BaseListFragment<T> extends DelayFragment<FragmentBaseList
     }
 
     public boolean isLoadMoreEnable() {
-        return false;
+        return true;
     }
 
     public RecyclerView.OnItemTouchListener onItemTouchListener() {
