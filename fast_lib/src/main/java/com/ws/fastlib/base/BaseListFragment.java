@@ -26,7 +26,7 @@ import io.reactivex.Single;
 import io.reactivex.disposables.Disposable;
 
 // 如果需要实现懒加载 在FragmentPagerAdapter在使用两个参数的构造方法, super(fm, FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
-public abstract class BaseListFragment<T> extends BaseFragment<FragmentBaseListBinding> implements SwipeRefreshLayout.OnRefreshListener,
+public abstract class BaseListFragment<T> extends DelayFragment<FragmentBaseListBinding> implements SwipeRefreshLayout.OnRefreshListener,
         BaseQuickAdapter.RequestLoadMoreListener {
 
     private RecyclerView mRecyclerView;
@@ -35,7 +35,6 @@ public abstract class BaseListFragment<T> extends BaseFragment<FragmentBaseListB
     private MultipleStatusLayout mMultipleStatusLayout;
     private Disposable mDisposable;
     private int mCurrentPage = 1;
-    private boolean isLoadData = false;
     private int mTotalPage = Integer.MAX_VALUE;
     private int PAGE_SIZE = 20;
     private List<T> mData = new ArrayList<>();
@@ -109,7 +108,6 @@ public abstract class BaseListFragment<T> extends BaseFragment<FragmentBaseListB
 
             @Override
             public void onSuccess(List<T> ts) {
-                isLoadData = true;
                 if (status == LoadStatus.LOADING) {
                     mData.clear();
                     mMultipleStatusLayout.showContentView();
@@ -122,8 +120,8 @@ public abstract class BaseListFragment<T> extends BaseFragment<FragmentBaseListB
                     mMultipleStatusLayout.showContentView();
                 } else if (status == LoadStatus.LOAD_MORE) {
                     mAdapter.addData(ts);
-                    if (ts.isEmpty() || ts.size() < PAGE_SIZE || mCurrentPage >= mTotalPage) {
-                        mAdapter.loadMoreEnd(mAdapter.getData().size() < PAGE_SIZE);
+                    if (ts.isEmpty() || ts.size() < getPageSize() || mCurrentPage >= mTotalPage) {
+                        mAdapter.loadMoreEnd(mAdapter.getData().size() < getPageSize());
                     } else {
                         mAdapter.loadMoreComplete();
                     }
@@ -176,6 +174,10 @@ public abstract class BaseListFragment<T> extends BaseFragment<FragmentBaseListB
         return emptyView;
     }
 
+    public int getPageSize() {
+        return PAGE_SIZE;
+    }
+
     public String setEmptyContent() {
         return "当前无数据哦...";
     }
@@ -200,14 +202,6 @@ public abstract class BaseListFragment<T> extends BaseFragment<FragmentBaseListB
     @Override
     public void onLoadMoreRequested() {
         requestData(LoadStatus.LOAD_MORE);
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        if (!isLoadData) {
-            requestData(LoadStatus.LOADING);
-        }
     }
 
 

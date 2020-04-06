@@ -19,13 +19,13 @@ import gorden.rxbus2.RxBus;
 
 public abstract class BaseFragment<DataBinding extends ViewDataBinding> extends Fragment {
 
-    protected DataBinding mDataBinding;
-    private View mContentView;
+    private DataBinding mDataBinding;
 
     public static void attachToContainer(AppCompatActivity activity, int container, Fragment fragment) {
         FragmentManager fm = activity.getSupportFragmentManager();
         FragmentTransaction transaction = fm.beginTransaction();
         transaction.replace(container, fragment);
+        fragment.setUserVisibleHint(true);
         transaction.commit();
     }
 
@@ -42,7 +42,7 @@ public abstract class BaseFragment<DataBinding extends ViewDataBinding> extends 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mDataBinding = DataBindingUtil.inflate(inflater, getLayoutId(), container, false);
-        mContentView = mDataBinding.getRoot();
+        View mContentView = mDataBinding.getRoot();
         ViewGroup parent = (ViewGroup) mContentView.getParent();
         if (parent != null) {
             parent.removeView(mContentView);
@@ -63,6 +63,10 @@ public abstract class BaseFragment<DataBinding extends ViewDataBinding> extends 
     protected abstract void initView(DataBinding binding);
 
     protected abstract void initData();
+
+    protected DataBinding getBinding() {
+        return mDataBinding;
+    }
 
     public void parseIntent(Bundle bundle) {
 
