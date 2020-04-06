@@ -8,6 +8,7 @@ import androidx.databinding.ViewDataBinding;
 import com.ws.fastlib.common.LoadStatus;
 
 public abstract class DelayFragment<DataBinding extends ViewDataBinding> extends BaseFragment<DataBinding> {
+
     protected boolean isCreated;
     protected boolean isVisibleToUser;
     protected boolean isLoad;

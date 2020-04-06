@@ -109,9 +109,9 @@ public abstract class BaseListFragment<T> extends DelayFragment<FragmentBaseList
             @Override
             public void onSuccess(List<T> ts) {
                 if (status == LoadStatus.LOADING) {
-                    mData.clear();
+                    mData = ts;
                     mMultipleStatusLayout.showContentView();
-                    mAdapter.addData(ts);
+                    mAdapter.setNewData(mData);
                     mAdapter.disableLoadMoreIfNotFullPage();
                 } else if (status == LoadStatus.REFRESH) {
                     mData = ts;
@@ -152,6 +152,10 @@ public abstract class BaseListFragment<T> extends DelayFragment<FragmentBaseList
 
     public RecyclerView.ItemDecoration getItemDecoration() {
         return null;
+    }
+
+    public List<T> getData() {
+        return mData;
     }
 
     public boolean isLoadMoreEnable() {
