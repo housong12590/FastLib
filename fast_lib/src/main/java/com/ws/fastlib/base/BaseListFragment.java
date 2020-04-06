@@ -10,6 +10,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.chad.library.adapter.base.loadmore.LoadMoreView;
 import com.ws.fastlib.R;
 import com.ws.fastlib.common.LoadStatus;
 import com.ws.fastlib.databinding.FragmentBaseListBinding;
@@ -74,14 +75,15 @@ public abstract class BaseListFragment<T> extends BaseFragment<FragmentBaseListB
             throw new NullPointerException("Please set the adapter first");
         }
         mAdapter.setEmptyView(setupEmptyView());
-        mAdapter.setOnLoadMoreListener(this, mRecyclerView);
-        mAdapter.disableLoadMoreIfNotFullPage();
-        mAdapter.setLoadMoreView(new CustomLoadMoreView());
-        mAdapter.setPreLoadNumber(3);
         mAdapter.setNewData(mData);
         mRecyclerView.setAdapter(mAdapter);
+        // 启用加载更多
         if (isLoadMoreEnable()) {
-            mAdapter.loadMoreEnd(true);
+            mAdapter.setOnLoadMoreListener(this, mRecyclerView);
+            mAdapter.disableLoadMoreIfNotFullPage();
+            mAdapter.setPreLoadNumber(3);
+            mAdapter.setLoadMoreView(getLoadMoreView());
+            mAdapter.setEnableLoadMore(true);
         }
     }
 
@@ -113,14 +115,10 @@ public abstract class BaseListFragment<T> extends BaseFragment<FragmentBaseListB
                     mAdapter.addData(ts);
                     mAdapter.disableLoadMoreIfNotFullPage();
                 } else if (status == LoadStatus.REFRESH) {
-                    mData.clear();
-                    mAdapter.addData(ts);
+                    mData = ts;
+                    mAdapter.setNewData(mData);
                     mSwipeRefreshLayout.setRefreshing(false);
                     mMultipleStatusLayout.showContentView();
-                    if (isLoadMoreEnable()) {
-                        mAdapter.setEnableLoadMore(true);
-//                        mAdapter.loadMoreComplete();
-                    }
                 } else if (status == LoadStatus.LOAD_MORE) {
                     mAdapter.addData(ts);
                     if (ts.isEmpty() || ts.size() < PAGE_SIZE || mCurrentPage >= mTotalPage) {
@@ -192,6 +190,10 @@ public abstract class BaseListFragment<T> extends BaseFragment<FragmentBaseListB
     @Override
     public void onRefresh() {
         requestData(LoadStatus.REFRESH);
+    }
+
+    public LoadMoreView getLoadMoreView() {
+        return new CustomLoadMoreView();
     }
 
     @Override
