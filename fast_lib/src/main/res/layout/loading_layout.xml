@@ -16,7 +16,7 @@
         android:textColor="@color/gray_999999"
         android:textSize="@dimen/text_size_15"/>
 
-    <com.ws.fastlib.widget.LoadingView
+    <com.hstmpl.widget.LoadingView
         android:id="@+id/loadingView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

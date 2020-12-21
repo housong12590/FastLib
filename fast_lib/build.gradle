@@ -5,7 +5,7 @@ android {
 
 
     defaultConfig {
-        minSdkVersion 19
+        minSdkVersion 21
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
@@ -56,8 +56,6 @@ dependencies {
     api 'lib.gorden.rxbus2:rxbus:2.0.1'
     // 图片加载框架
     api 'com.github.bumptech.glide:glide:4.7.1'
-    // 黄油刀
-//    api 'com.jakewharton:butterknife:10.2.0'
     // recyclerView适配器框架
     api 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.30'
     // md风格对话框
