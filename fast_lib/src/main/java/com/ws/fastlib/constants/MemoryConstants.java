@@ -1,11 +1,10 @@
 package com.ws.fastlib.constants;
 
 
+import androidx.annotation.IntDef;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
-
-import androidx.annotation.IntDef;
 
 /**
  * <pre>
@@ -24,15 +23,15 @@ public final class MemoryConstants {
     /**
      * KB与Byte的倍数
      */
-    public static final int KB   = 1024;
+    public static final int KB = 1024;
     /**
      * MB与Byte的倍数
      */
-    public static final int MB   = 1048576;
+    public static final int MB = 1048576;
     /**
      * GB与Byte的倍数
      */
-    public static final int GB   = 1073741824;
+    public static final int GB = 1073741824;
 
     @IntDef({BYTE, KB, MB, GB})
     @Retention(RetentionPolicy.SOURCE)

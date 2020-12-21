@@ -9,10 +9,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
+import org.jetbrains.annotations.NotNull;
+
 
 public class SpaceItemDecoration extends RecyclerView.ItemDecoration {
 
-    private int space;
+    private final int space;
     private int headerCount;
     private boolean side;
 
@@ -32,7 +34,7 @@ public class SpaceItemDecoration extends RecyclerView.ItemDecoration {
 
 
     @Override
-    public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
+    public void getItemOffsets(@NotNull Rect outRect, @NotNull View view, RecyclerView parent, @NotNull RecyclerView.State state) {
         RecyclerView.LayoutManager manager = parent.getLayoutManager();
         if (manager instanceof GridLayoutManager) {
             GridLayoutManager layoutManager = (GridLayoutManager) manager;

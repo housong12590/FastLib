@@ -51,7 +51,7 @@ public class ByteUtils {
         int temp = value;
         byte[] bytes = new byte[2];
         for (int i = 0; i < bytes.length; i++) {
-            bytes[i] = new Integer(temp & 0xff).byteValue();
+            bytes[i] = Integer.valueOf(temp & 0xff).byteValue();
             temp = temp >> 8;
         }
         return bytes;
@@ -76,7 +76,7 @@ public class ByteUtils {
         byte[] bytes = new byte[8];
         long l = Double.doubleToLongBits(value);
         for (int i = 0; i < 8; i++) {
-            bytes[i] = new Long(l).byteValue();
+            bytes[i] = Long.valueOf(l).byteValue();
             l = l >> 8;
         }
         return bytes;

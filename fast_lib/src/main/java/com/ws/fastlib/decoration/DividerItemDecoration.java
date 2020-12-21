@@ -10,6 +10,8 @@ import android.view.View;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import org.jetbrains.annotations.NotNull;
+
 /**
  * Author: 30453
  * Date: 2016/7/27 18:24
@@ -19,9 +21,9 @@ public class DividerItemDecoration extends RecyclerView.ItemDecoration {
     private static final int DEFAULT_DIVIDER_COLOR = Color.parseColor("#f1f1f1");
     private static final int DEFAULT_ORIENTATION = LinearLayoutManager.VERTICAL;
 
-    private int mOrientation;
+    private final int mOrientation;
     private float mDividerHeight = 0.8f;
-    private Paint mPaint;
+    private final Paint mPaint;
     private int mDividerColor;
     private float margeSize = 0;
 
@@ -60,7 +62,7 @@ public class DividerItemDecoration extends RecyclerView.ItemDecoration {
     }
 
     @Override
-    public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state) {
+    public void onDraw(@NotNull Canvas c, @NotNull RecyclerView parent, @NotNull RecyclerView.State state) {
         if (mOrientation == LinearLayoutManager.VERTICAL) {
             drawVertical(c, parent);
         } else {
@@ -96,7 +98,7 @@ public class DividerItemDecoration extends RecyclerView.ItemDecoration {
 
 
     @Override
-    public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
+    public void getItemOffsets(@NotNull Rect outRect, @NotNull View view, @NotNull RecyclerView parent, @NotNull RecyclerView.State state) {
         if (mOrientation == LinearLayoutManager.VERTICAL) {
             outRect.set(0, 0, 0, (int) (mDividerHeight + 0.5f));
         } else {
