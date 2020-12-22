@@ -20,8 +20,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class HttpManager {
 
     private static HttpManager instance;
-    private OkHttpClient httpClient;
-    private final Map<String, Retrofit> mCacheMap;
+    private OkHttpClient mHttpClient;
+    private final Map<String, Retrofit> mClientMaps;
 
     private static HttpManager getInstance() {
         if (instance == null) {
@@ -38,20 +38,24 @@ public class HttpManager {
         return getInstance().getService0(clazz);
     }
 
-    public static OkHttpClient defaultClient() {
-        return getInstance().getHttpClient();
+    public static OkHttpClient getHttpClient() {
+        return getInstance().mHttpClient;
+    }
+
+    public static void setHttpClient(OkHttpClient httpClient) {
+        getInstance().mHttpClient = httpClient;
     }
 
     public HttpManager() {
-        mCacheMap = new HashMap<>();
-        httpClient = new OkHttpClient.Builder()
-                .readTimeout(30, TimeUnit.SECONDS)
-                .writeTimeout(30, TimeUnit.SECONDS)
-                .build();
+        mClientMaps = new HashMap<>();
+        initDefaultClient();
     }
 
-    public OkHttpClient getHttpClient() {
-        return httpClient;
+    private void initDefaultClient() {
+        mHttpClient = new OkHttpClient.Builder()
+                .readTimeout(60, TimeUnit.SECONDS)
+                .writeTimeout(60, TimeUnit.SECONDS)
+                .build();
     }
 
     public <T> T getService0(Class<T> clazz) {
@@ -60,14 +64,14 @@ public class HttpManager {
         if (service == null) {
             throw new NullPointerException("API interfaces need use @Service...");
         }
-        retrofit = mCacheMap.get(clazz.getName());
+        retrofit = mClientMaps.get(clazz.getName());
         if (retrofit == null) {
             OkHttpClient httpClient = getHttpClient(service);
             retrofit = new Retrofit.Builder().client(httpClient)
                     .addConverterFactory(GsonConverterFactory.create())
                     .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                     .baseUrl(service.baseUrl()).build();
-            mCacheMap.put(clazz.getName(), retrofit);
+            mClientMaps.put(clazz.getName(), retrofit);
         }
         T apiService = retrofit.create(clazz);
         if (service.schedulers()) {
