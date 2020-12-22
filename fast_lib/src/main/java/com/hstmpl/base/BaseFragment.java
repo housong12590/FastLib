@@ -13,7 +13,9 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.hstmpl.common.LoadStatus;
+import com.hstmpl.net.LoadStatus;
+
+import org.jetbrains.annotations.NotNull;
 
 import gorden.rxbus2.RxBus;
 
@@ -40,7 +42,7 @@ public abstract class BaseFragment<DataBinding extends ViewDataBinding> extends 
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mDataBinding = DataBindingUtil.inflate(inflater, getLayoutId(), container, false);
         View mContentView = mDataBinding.getRoot();
         ViewGroup parent = (ViewGroup) mContentView.getParent();
@@ -52,7 +54,7 @@ public abstract class BaseFragment<DataBinding extends ViewDataBinding> extends 
     }
 
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
+    public void onViewCreated(@NotNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initData();
         requestData(LoadStatus.LOADING);

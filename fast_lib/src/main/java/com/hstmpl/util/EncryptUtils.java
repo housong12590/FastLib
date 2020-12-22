@@ -35,36 +35,6 @@ public final class EncryptUtils {
     ///////////////////////////////////////////////////////////////////////////
 
     /**
-     * MD2加密
-     *
-     * @param data 明文字符串
-     * @return 16进制密文
-     */
-    public static String encryptMD2ToString(String data) {
-        return encryptMD2ToString(data.getBytes());
-    }
-
-    /**
-     * MD2加密
-     *
-     * @param data 明文字节数组
-     * @return 16进制密文
-     */
-    public static String encryptMD2ToString(byte[] data) {
-        return bytes2HexString(encryptMD2(data));
-    }
-
-    /**
-     * MD2加密
-     *
-     * @param data 明文字节数组
-     * @return 密文字节数组
-     */
-    public static byte[] encryptMD2(byte[] data) {
-        return hashTemplate(data, "MD2");
-    }
-
-    /**
      * MD5加密
      *
      * @param data 明文字符串
@@ -72,32 +42,6 @@ public final class EncryptUtils {
      */
     public static String encryptMD5ToString(String data) {
         return encryptMD5ToString(data.getBytes()).toLowerCase();
-    }
-
-
-    public static String md5(String str) {
-        try {
-            MessageDigest md = MessageDigest.getInstance("MD5");
-            md.update(str.getBytes());
-            byte b[] = md.digest();
-            int i;
-            StringBuilder buf = new StringBuilder("");
-            for (byte aB : b) {
-                i = aB;
-                if (i < 0) {
-                    i += 256;
-                }
-                if (i < 16) {
-                    buf.append("0");
-                }
-                buf.append(Integer.toHexString(i));
-            }
-            str = buf.toString();
-        } catch (Exception e) {
-            e.printStackTrace();
-
-        }
-        return str;
     }
 
     /**
@@ -192,7 +136,7 @@ public final class EncryptUtils {
             fis = new FileInputStream(file);
             MessageDigest md = MessageDigest.getInstance("MD5");
             digestInputStream = new DigestInputStream(fis, md);
-            byte[] buffer = new byte[256 * 1024];
+            byte[] buffer = new byte[16 * 1024];
             while (true) {
                 if (!(digestInputStream.read(buffer) > 0)) break;
             }
@@ -882,7 +826,7 @@ public final class EncryptUtils {
         }
     }
 
-    private static final char hexDigits[] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
+    private static final char[] hexDigits = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
 
     /**
      * byteArr转hexString

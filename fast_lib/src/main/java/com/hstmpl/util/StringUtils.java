@@ -1,7 +1,12 @@
 package com.hstmpl.util;
 
 
+import com.hstmpl.convert.Convert;
+
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Random;
 
 public class StringUtils {
 
@@ -28,6 +33,51 @@ public class StringUtils {
         }
         return sb.substring(0, sb.length() - 1);
     }
+
+    public static String getRandomStringByLength(int length) {
+        return getRandomString("abcdefghijklmnopqrstuvwxyz0123456789", length);
+    }
+
+    public static String getRandomNumberByLength(int length) {
+        return getRandomString("0123456789", length);
+    }
+
+    public static String getRandomString(String seed, int length) {
+        Random random = new Random();
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < length; i++) {
+            int number = random.nextInt(seed.length());
+            sb.append(seed.charAt(number));
+        }
+        return sb.toString();
+    }
+
+    public static Map<String, Object> parseQueryString(String queryString) {
+        Map<String, Object> param = new HashMap<>();
+        if (isEmpty(queryString)) {
+            return param;
+        }
+        for (String queryStr : queryString.split("&")) {
+            String[] split = queryStr.split("=");
+            if (split.length == 2) {
+                param.put(split[0], split[1]);
+            }
+        }
+        return param;
+    }
+
+
+    public static String toQueryString(Map<?, ?> param) {
+        StringBuilder sb = new StringBuilder();
+        for (Map.Entry<?, ?> entry : param.entrySet()) {
+            sb.append(Convert.toString(entry.getKey()))
+                    .append("=")
+                    .append(Convert.toString(entry.getValue()))
+                    .append("&");
+        }
+        return sb.substring(0, sb.length() - 1);
+    }
+
 
     public static String convertUnicode(String ori) {
         char aChar;

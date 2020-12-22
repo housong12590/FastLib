@@ -1,4 +1,4 @@
-package com.hstmpl.network.callback;
+package com.hstmpl.net.callback;
 
 
 public interface Callback<T> {

@@ -1,7 +1,7 @@
 package com.hstmpl.fast;
 
-import com.hstmpl.network.Result;
-import com.hstmpl.network.annotation.Service;
+import com.hstmpl.net.Result;
+import com.hstmpl.net.annotation.Service;
 
 import io.reactivex.Single;
 import retrofit2.http.GET;

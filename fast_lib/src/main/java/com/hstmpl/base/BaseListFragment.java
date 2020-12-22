@@ -12,9 +12,9 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.chad.library.adapter.base.loadmore.LoadMoreView;
 import com.hstmpl.fastlib.R;
-import com.hstmpl.common.LoadStatus;
+import com.hstmpl.net.LoadStatus;
 import com.hstmpl.fastlib.databinding.FragmentBaseListBinding;
-import com.hstmpl.network.observer.DefaultObserver;
+import com.hstmpl.net.observer.DefaultObserver;
 import com.hstmpl.util.ColorUtils;
 import com.hstmpl.widget.CustomLoadMoreView;
 import com.hstmpl.widget.MultipleStatusLayout;
@@ -36,7 +36,7 @@ public abstract class BaseListFragment<T> extends DelayFragment<FragmentBaseList
     private Disposable mDisposable;
     private int mCurrentPage = 1;
     private int mTotalPage = Integer.MAX_VALUE;
-    private int PAGE_SIZE = 20;
+    private static final int PAGE_SIZE = 20;
     private List<T> mData = new ArrayList<>();
 
     @Override

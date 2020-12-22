@@ -59,10 +59,10 @@ public class BeanUtils {
         }
     }
 
-//    public static <T> T toBean2(Object value, Class<T> cls) {
-//        String json = JSON.toJson(value);
-//        return JSON.toBean(json, cls);
-//    }
+    public static <T> T toBean2(Object value, Class<T> cls) {
+        String json = JSON.toJson(value);
+        return JSON.toBean(json, cls);
+    }
 
     public static Map<String, Object> toMap(Object bean) {
         Map<String, Object> map = new HashMap<>();

@@ -43,6 +43,11 @@ public final class RegexConstants {
      * 正则：URL
      */
     public static final String REGEX_URL = "[a-zA-z]+://[^\\s]*";
+
+    /**
+     * 正则: http链接
+     */
+    public static final String REGEX_HTTP = "^https?://[^\\s]+";
     /**
      * 正则：汉字
      */

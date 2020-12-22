@@ -1,7 +1,7 @@
-package com.hstmpl.network;
+package com.hstmpl.net;
 
 
-import com.hstmpl.network.error.RequestError;
+import com.hstmpl.net.error.RequestError;
 
 import io.reactivex.Single;
 import io.reactivex.SingleSource;

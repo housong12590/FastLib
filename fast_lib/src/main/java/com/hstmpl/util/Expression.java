@@ -1,5 +1,7 @@
 package com.hstmpl.util;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Map;
@@ -124,6 +126,7 @@ public class Expression {
 
     }
 
+    @NotNull
     @Override
     public String toString() {
         return expression;

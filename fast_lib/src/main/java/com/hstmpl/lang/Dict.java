@@ -6,7 +6,9 @@ import androidx.arch.core.util.Function;
 import com.hstmpl.convert.Convert;
 import com.hstmpl.util.BeanUtils;
 import com.hstmpl.util.Expression;
+import com.hstmpl.util.JSON;
 import com.hstmpl.util.MapUtils;
+import com.hstmpl.util.StringUtils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -43,11 +45,11 @@ public class Dict extends HashMap<String, Object> implements PrimitiveGetter<Str
         super(initialCapacity);
     }
 
-//    public Dict(String json) {
-//        if (StringUtils.isNotEmpty(json)) {
-//            this.putAll(JSON.toBean(json, Dict.class));
-//        }
-//    }
+    public Dict(String json) {
+        if (StringUtils.isNotEmpty(json)) {
+            this.putAll(JSON.toBean(json, Dict.class));
+        }
+    }
 
     public Dict(Map<?, ?> map) {
         super(map.size());
@@ -117,9 +119,9 @@ public class Dict extends HashMap<String, Object> implements PrimitiveGetter<Str
         return mapping.apply(value);
     }
 
-//    public String toJson() {
-//        return JSON.toJson(this);
-//    }
+    public String toJson() {
+        return JSON.toJson(this);
+    }
 
     public Dict filter(String... keys) {
         Dict result = new Dict(keys.length);

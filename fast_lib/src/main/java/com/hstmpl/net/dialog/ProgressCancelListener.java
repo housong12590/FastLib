@@ -1,4 +1,4 @@
-package com.hstmpl.network.dialog;
+package com.hstmpl.net.dialog;
 
 public interface ProgressCancelListener {
     void onCancelProgress();

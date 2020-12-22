@@ -6,6 +6,8 @@ import android.os.Build;
 import android.os.Environment;
 import android.os.StatFs;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.File;
@@ -84,7 +86,7 @@ public final class SDCardUtils {
      */
     public static File getCacheDir() {
         Context context = Utils.getContext();
-        File cacheFile = null;
+        File cacheFile;
         if (isSDCardEnable()) {
             cacheFile = context.getExternalCacheDir();
         } else {
@@ -140,6 +142,7 @@ public final class SDCardUtils {
         long freeBytes;
         long availableBytes;
 
+        @NotNull
         @Override
         public String toString() {
             return "isExist=" + isExist +

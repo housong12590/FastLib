@@ -1,4 +1,4 @@
-package com.hstmpl.common;
+package com.hstmpl.net;
 
 public enum LoadStatus {
     /**

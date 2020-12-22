@@ -1,4 +1,4 @@
-package com.hstmpl.network.proxy;
+package com.hstmpl.net.proxy;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;

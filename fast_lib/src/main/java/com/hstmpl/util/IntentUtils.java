@@ -9,9 +9,9 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.provider.Settings;
 
-import java.io.File;
-
 import androidx.core.content.FileProvider;
+
+import java.io.File;
 
 /**
  * <pre>
@@ -242,6 +242,9 @@ public final class IntentUtils {
         return intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_ACTIVITY_NEW_TASK);
     }
 
+    /**
+     * 跳转到应用市场
+     */
     public static void gotoAppStore(Context context) {
         try {
             Uri uri = Uri.parse(String.format("market://details?id=%s", context.getPackageName()));

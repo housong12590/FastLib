@@ -1,8 +1,8 @@
-package com.hstmpl.network.observer;
+package com.hstmpl.net.observer;
 
 
-import com.hstmpl.network.dialog.ProgressCancelListener;
-import com.hstmpl.network.dialog.ProgressDialogHandler;
+import com.hstmpl.net.dialog.ProgressCancelListener;
+import com.hstmpl.net.dialog.ProgressDialogHandler;
 import com.hstmpl.util.ActivityUtils;
 
 import io.reactivex.annotations.NonNull;

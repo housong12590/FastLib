@@ -1,8 +1,8 @@
-package com.hstmpl.network.observer;
+package com.hstmpl.net.observer;
 
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.stream.MalformedJsonException;
-import com.hstmpl.network.error.RequestError;
+import com.hstmpl.net.error.RequestError;
 import com.hstmpl.util.LogUtils;
 import com.hstmpl.util.ToastUtils;
 

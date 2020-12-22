@@ -6,9 +6,9 @@ import com.hstmpl.fast.databinding.ActivityMainBinding;
 import com.hstmpl.base.BaseActivity;
 import com.hstmpl.base.BaseFragment;
 import com.hstmpl.base.BaseListFragment;
-import com.hstmpl.common.LoadStatus;
-import com.hstmpl.network.HttpManager;
-import com.hstmpl.network.Transformer;
+import com.hstmpl.net.LoadStatus;
+import com.hstmpl.net.HttpManager;
+import com.hstmpl.net.Transformer;
 
 import java.util.List;
 

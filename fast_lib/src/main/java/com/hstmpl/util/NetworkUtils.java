@@ -48,11 +48,7 @@ public final class NetworkUtils {
      * <p>3.0以下打开设置界面</p>
      */
     public static void openWirelessSettings() {
-        if (android.os.Build.VERSION.SDK_INT > 10) {
-            Utils.getContext().startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
-        } else {
-            Utils.getContext().startActivity(new Intent(android.provider.Settings.ACTION_SETTINGS).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
-        }
+        Utils.getContext().startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
     }
 
     /**
@@ -103,9 +99,7 @@ public final class NetworkUtils {
         try {
             TelephonyManager tm = (TelephonyManager) Utils.getContext().getSystemService(Context.TELEPHONY_SERVICE);
             Method getMobileDataEnabledMethod = tm.getClass().getDeclaredMethod("getDataEnabled");
-            if (null != getMobileDataEnabledMethod) {
-                return (boolean) getMobileDataEnabledMethod.invoke(tm);
-            }
+            return (boolean) getMobileDataEnabledMethod.invoke(tm);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -122,9 +116,7 @@ public final class NetworkUtils {
         try {
             TelephonyManager tm = (TelephonyManager) Utils.getContext().getSystemService(Context.TELEPHONY_SERVICE);
             Method setMobileDataEnabledMethod = tm.getClass().getDeclaredMethod("setDataEnabled", boolean.class);
-            if (null != setMobileDataEnabledMethod) {
-                setMobileDataEnabledMethod.invoke(tm, enabled);
-            }
+            setMobileDataEnabledMethod.invoke(tm, enabled);
         } catch (Exception e) {
             e.printStackTrace();
         }

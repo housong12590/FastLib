@@ -1,4 +1,4 @@
-package com.hstmpl.network.dialog;
+package com.hstmpl.net.dialog;
 
 import android.content.Context;
 import android.content.DialogInterface;

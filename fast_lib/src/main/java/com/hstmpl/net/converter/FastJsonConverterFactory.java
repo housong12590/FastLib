@@ -1,4 +1,4 @@
-package com.hstmpl.network.converter;
+package com.hstmpl.net.converter;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;

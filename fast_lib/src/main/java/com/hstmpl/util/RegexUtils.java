@@ -1,6 +1,8 @@
 package com.hstmpl.util;
 
 
+import androidx.arch.core.util.Function;
+
 import com.hstmpl.constants.RegexConstants;
 
 import java.util.ArrayList;
@@ -94,6 +96,16 @@ public final class RegexUtils {
      */
     public static boolean isURL(CharSequence input) {
         return isMatch(RegexConstants.REGEX_URL, input);
+    }
+
+    /**
+     * 验证HTTP链接
+     *
+     * @param input 待验证文本
+     * @return {@code true}: 匹配<br>{@code false}: 不匹配
+     */
+    public static boolean isHttp(CharSequence input) {
+        return isMatch(RegexConstants.REGEX_HTTP, input);
     }
 
     /**
@@ -202,5 +214,44 @@ public final class RegexUtils {
     public static String getReplaceAll(String input, String regex, String replacement) {
         if (input == null) return null;
         return Pattern.compile(regex).matcher(input).replaceAll(replacement);
+    }
+
+    /**
+     * 替换正则表达式内空
+     *
+     * @param regex    正则表达式
+     * @param text     文本
+     * @param callback 回调
+     * @return 替换后的文本
+     */
+    public static String replaceRegexpValue(String regex, String text, Function<String[], String> callback) {
+        Pattern pattern = Pattern.compile(regex);
+        return replaceRegexpValue(pattern, text, callback);
+    }
+
+    /**
+     * 替换正则表达式内空
+     *
+     * @param pattern  正则表达式
+     * @param text     文本
+     * @param callback 回调
+     * @return 替换后的文本
+     */
+    public static String replaceRegexpValue(Pattern pattern, String text, Function<String[], String> callback) {
+        Matcher matcher = pattern.matcher(text);
+        StringBuilder sb = new StringBuilder();
+        int position = 0;
+        String[] arr = null;
+        while (matcher.find()) {
+            if (arr == null) arr = new String[matcher.groupCount() + 1];
+            for (int i = 0; i < arr.length; i++) {
+                arr[i] = matcher.group(i);
+            }
+            sb.append(text, position, matcher.start());
+            sb.append(callback.apply(arr));
+            position = matcher.end();
+        }
+        sb.append(text, position, text.length());
+        return sb.toString();
     }
 }

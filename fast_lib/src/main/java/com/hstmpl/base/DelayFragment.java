@@ -5,7 +5,9 @@ import android.view.View;
 
 import androidx.databinding.ViewDataBinding;
 
-import com.hstmpl.common.LoadStatus;
+import com.hstmpl.net.LoadStatus;
+
+import org.jetbrains.annotations.NotNull;
 
 public abstract class DelayFragment<DataBinding extends ViewDataBinding> extends BaseFragment<DataBinding> {
 
@@ -14,7 +16,7 @@ public abstract class DelayFragment<DataBinding extends ViewDataBinding> extends
     private boolean isLoad;
 
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
+    public void onViewCreated(@NotNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         this.isCreated = true;
         lazyLoad();

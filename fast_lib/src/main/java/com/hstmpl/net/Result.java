@@ -1,4 +1,4 @@
-package com.hstmpl.network;
+package com.hstmpl.net;
 
 public class Result<T> {
 

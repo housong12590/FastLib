@@ -1,4 +1,4 @@
-package com.hstmpl.bcst;
+package com.hstmpl.broadcast;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;

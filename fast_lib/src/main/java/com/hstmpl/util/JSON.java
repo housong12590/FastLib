@@ -1,7 +1,6 @@
 package com.hstmpl.util;
 
 
-import com.alibaba.fastjson.JSON;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -11,12 +10,12 @@ import java.lang.reflect.Type;
 import java.util.List;
 import java.util.Map;
 
-public class JSONUtils {
+public class JSON {
 
     private static Converter converter = findSupportJsonLibrary();
 
     public static void setConverter(Class<?> cls) {
-        if (converter == null || converter.getClass() != cls) {
+        if (converter.getClass() != cls) {
             try {
                 converter = (Converter) cls.newInstance();
             } catch (InstantiationException | IllegalAccessException e) {
@@ -125,28 +124,28 @@ public class JSONUtils {
 
         @Override
         public <T> T toBean(String json, Class<T> cls) {
-            return JSON.parseObject(json, cls);
+            return com.alibaba.fastjson.JSON.parseObject(json, cls);
         }
 
         @Override
         public <T> List<T> toList(String json, Class<T> cls) {
-            return JSON.parseArray(json, cls);
+            return com.alibaba.fastjson.JSON.parseArray(json, cls);
         }
 
         @Override
         public <T> Map<String, T> toMap(String json, Class<T> cls) {
             Type type = getType(Map.class, String.class, cls);
-            return JSON.parseObject(json, type);
+            return com.alibaba.fastjson.JSON.parseObject(json, type);
         }
 
         @Override
         public Object toBean(String json, Type type) {
-            return JSON.parseObject(json, type);
+            return com.alibaba.fastjson.JSON.parseObject(json, type);
         }
 
         @Override
         public String toJson(Object obj) {
-            return JSON.toJSONString(obj);
+            return com.alibaba.fastjson.JSON.toJSONString(obj);
         }
     }
 
@@ -156,10 +155,10 @@ public class JSONUtils {
     }
 
     public static class ParameterizedTypeImpl implements ParameterizedType {
-        private final Class raw;
+        private final Class<?> raw;
         private final Type[] args;
 
-        ParameterizedTypeImpl(Class raw, Type[] args) {
+        ParameterizedTypeImpl(Class<?> raw, Type[] args) {
             this.raw = raw;
             this.args = args != null ? args : new Type[0];
         }

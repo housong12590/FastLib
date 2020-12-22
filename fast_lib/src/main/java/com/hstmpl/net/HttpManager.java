@@ -1,8 +1,8 @@
-package com.hstmpl.network;
+package com.hstmpl.net;
 
 
-import com.hstmpl.network.annotation.Service;
-import com.hstmpl.network.proxy.SchedulersProxy;
+import com.hstmpl.net.annotation.Service;
+import com.hstmpl.net.proxy.SchedulersProxy;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Proxy;

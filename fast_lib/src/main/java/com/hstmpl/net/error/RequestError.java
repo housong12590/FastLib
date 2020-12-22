@@ -1,4 +1,4 @@
-package com.hstmpl.network.error;
+package com.hstmpl.net.error;
 
 public class RequestError extends Exception {
 

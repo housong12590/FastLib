@@ -1,4 +1,4 @@
-package com.hstmpl.network.annotation;
+package com.hstmpl.net.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

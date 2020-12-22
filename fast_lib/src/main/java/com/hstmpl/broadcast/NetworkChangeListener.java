@@ -1,4 +1,4 @@
-package com.hstmpl.bcst;
+package com.hstmpl.broadcast;
 
 
 import com.hstmpl.util.NetworkUtils;
