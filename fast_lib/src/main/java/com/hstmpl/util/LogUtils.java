@@ -16,8 +16,25 @@ public class LogUtils {
         throw new UnsupportedOperationException("cannot be instantiated");
     }
 
-    public static boolean isDebug = true;
-    private static final String TAG = "ciin";
+    private static final String TAG = "CIIN";
+    private static Level level = Level.INFO;
+
+    public static void setLevel(Level level) {
+        LogUtils.level = level;
+    }
+
+    public enum Level {
+        ERROR(1),
+        WARN(2),
+        DEBUG(3),
+        INFO(4);
+
+        int value;
+
+        Level(int value) {
+            this.value = value;
+        }
+    }
 
     // 下面四个是默认tag的函数
     public static void i(String msg) {
@@ -40,14 +57,14 @@ public class LogUtils {
         e(TAG, obj.toString());
     }
 
-    public static void v(String msg) {
-        v(TAG, msg);
+    public static void w(String msg) {
+        w(TAG, msg);
     }
 
 
     // 下面是传入自定义tag的函数
     public static void i(String tag, String msg) {
-        if (isDebug) {
+        if (level.value >= Level.INFO.value) {
             int strLen = msg.length();
             int index = 0;
             while (strLen - index > LOG_MAX_LENGTH) {
@@ -56,11 +73,10 @@ public class LogUtils {
             }
             Log.i(tag, msg.substring(index));
         }
-
     }
 
     public static void d(String tag, String msg) {
-        if (isDebug) {
+        if (level.value >= Level.DEBUG.value) {
             int strLen = msg.length();
             int index = 0;
             while (strLen - index > LOG_MAX_LENGTH) {
@@ -73,7 +89,7 @@ public class LogUtils {
     }
 
     public static void e(String tag, String msg) {
-        if (isDebug) {
+        if (level.value >= Level.ERROR.value) {
             int strLen = msg.length();
             int index = 0;
             while (strLen - index > LOG_MAX_LENGTH) {
@@ -85,16 +101,15 @@ public class LogUtils {
 
     }
 
-    public static void v(String tag, String msg) {
-        if (isDebug) {
+    public static void w(String tag, String msg) {
+        if (level.value >= Level.WARN.value) {
             int strLen = msg.length();
             int index = 0;
             while (strLen - index > LOG_MAX_LENGTH) {
-                Log.v(TAG, msg.substring(index, index + LOG_MAX_LENGTH));
+                Log.e(TAG, msg.substring(index, index + LOG_MAX_LENGTH));
                 index += LOG_MAX_LENGTH;
             }
-            Log.v(tag, msg.substring(index));
+            Log.w(tag, msg.substring(index));
         }
-
     }
 }
