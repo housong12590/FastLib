@@ -1,5 +1,4 @@
-
-set version=2.0.4
+set version=2.0.5
 
 git tag %version%
 
