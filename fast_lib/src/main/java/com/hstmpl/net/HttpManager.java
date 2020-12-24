@@ -21,6 +21,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class HttpManager {
 
+
     private static HttpManager instance;
     private OkHttpClient mHttpClient;
     private final Map<String, Retrofit> mClientMaps;
