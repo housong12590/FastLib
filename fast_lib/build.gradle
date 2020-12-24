@@ -32,16 +32,16 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'androidx.appcompat:appcompat:1.2.0'
     testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
     // android官方ui扩展包
 //    api "com.android.support:appcompat-v7:28.0.1"
 //    api "com.android.support:design:28.0.1"
 //    api 'com.google.code.gson:gson:2.8.6'
     api 'androidx.recyclerview:recyclerview:1.1.0'
-    api 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0-beta01'
+    api 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0-rc01'
     api 'com.alibaba:fastjson:1.2.62'
     // 异步响应式框架
     api 'io.reactivex.rxjava2:rxjava:2.2.8'
@@ -63,7 +63,7 @@ dependencies {
     // 动态权限
     api 'com.github.tbruyelle:rxpermissions:0.10.2'
     // aop 框架
-    api 'org.aspectj:aspectjrt:1.9.1'
+//    api 'org.aspectj:aspectjrt:1.9.1'
     // app更新模块
 //    api 'com.qianwen:update-app:3.5.2'
 }
