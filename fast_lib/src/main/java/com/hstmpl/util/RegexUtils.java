@@ -239,9 +239,13 @@ public final class RegexUtils {
      */
     public static String replaceRegexpValue(Pattern pattern, String text, Function<String[], String> callback) {
         Matcher matcher = pattern.matcher(text);
-        StringBuilder sb = new StringBuilder();
+        return replaceRegexpValue(matcher, text, callback);
+    }
+
+    public static String replaceRegexpValue(Matcher matcher, String text, Function<String[], String> callback) {
         int position = 0;
         String[] arr = null;
+        StringBuilder sb = new StringBuilder();
         while (matcher.find()) {
             if (arr == null) arr = new String[matcher.groupCount() + 1];
             for (int i = 0; i < arr.length; i++) {
