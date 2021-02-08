@@ -16,11 +16,15 @@ public class LogUtils {
         throw new UnsupportedOperationException("cannot be instantiated");
     }
 
-    private static final String TAG = "CIIN";
+    private static String TAG = "CIIN";
     private static Level level = Level.INFO;
 
     public static void setLevel(Level level) {
         LogUtils.level = level;
+    }
+
+    public static void setTag(String tag) {
+        LogUtils.TAG = tag;
     }
 
     public enum Level {
@@ -86,7 +90,6 @@ public class LogUtils {
             }
             Log.d(tag, msg.substring(index));
         }
-
     }
 
     public static void e(String tag, String msg) {
@@ -99,7 +102,11 @@ public class LogUtils {
             }
             Log.e(tag, msg.substring(index));
         }
+    }
 
+    public static void e(String tag, String msg, Throwable e) {
+        e(tag, msg);
+        e.printStackTrace();
     }
 
     public static void w(String tag, String msg) {
