@@ -85,14 +85,19 @@ public final class SDCardUtils {
      * 获取缓存文件目录
      */
     public static File getCacheDir() {
-        Context context = Utils.getContext();
-        File cacheFile;
+        Context ctx = Utils.getContext();
         if (isSDCardEnable()) {
-            cacheFile = context.getExternalCacheDir();
-        } else {
-            cacheFile = context.getCacheDir();
+            return ctx.getExternalCacheDir();
         }
-        return cacheFile;
+        return ctx.getCacheDir();
+    }
+
+    public static File getFilesDir() {
+        Context ctx = Utils.getContext();
+        if (isSDCardEnable()) {
+            return ctx.getExternalFilesDir(null);
+        }
+        return ctx.getFilesDir();
     }
 
     /**
@@ -104,11 +109,6 @@ public final class SDCardUtils {
             return null;
         }
         return cacheDir.getAbsolutePath();
-    }
-
-    public static String getCacheFilePath() {
-        Context context = Utils.getContext();
-        return context.getCacheDir().getAbsolutePath();
     }
 
     /**
