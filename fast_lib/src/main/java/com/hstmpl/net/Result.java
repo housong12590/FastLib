@@ -30,5 +30,7 @@ public abstract class Result<T> {
         this.data = data;
     }
 
-    public abstract boolean isSuccess();
+    public boolean isSuccess() {
+        return this.code == 200;
+    }
 }
