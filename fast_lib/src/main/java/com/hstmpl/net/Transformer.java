@@ -17,17 +17,17 @@ public class Transformer {
         return new SingleTransformer<Result<T>, T>() {
             @NotNull
             @Override
-            public SingleSource<T> apply(@NotNull Single<Result<T>> upstream) {
+            public SingleSource<T> apply(Single<Result<T>> upstream) {
                 return upstream.map(new Function<Result<T>, T>() {
                     @Override
-                    public T apply(@NotNull Result<T> tResult) throws Exception {
-                        if (tResult.getCode() == 1) {
-                            if (tResult.getResult() == null) {
-                                tResult.setResult((T) new Object());
+                    public T apply(Result<T> r) throws Exception {
+                        if (r.isSuccess()) {
+                            if (r.getData() == null) {
+                                r.setData((T) new Object());
                             }
-                            return tResult.getResult();
+                            return r.getData();
                         }
-                        throw new RequestError(tResult.getMsg());
+                        throw new RequestError(r.getMsg());
                     }
                 });
             }

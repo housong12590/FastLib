@@ -1,10 +1,10 @@
 package com.hstmpl.net;
 
-public class Result<T> {
+public abstract class Result<T> {
 
     private int code;
     private String msg;
-    private T result;
+    private T data;
 
     public int getCode() {
         return code;
@@ -22,11 +22,13 @@ public class Result<T> {
         this.msg = msg;
     }
 
-    public T getResult() {
-        return result;
+    public T getData() {
+        return data;
     }
 
-    public void setResult(T result) {
-        this.result = result;
+    public void setData(T data) {
+        this.data = data;
     }
+
+    public abstract boolean isSuccess();
 }
