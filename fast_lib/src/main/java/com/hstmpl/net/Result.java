@@ -1,6 +1,6 @@
 package com.hstmpl.net;
 
-public abstract class Result<T> {
+public class Result<T> {
 
     public static int SUCCESS_CODE = 200;
 
