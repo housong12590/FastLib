@@ -8,10 +8,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
 
+import com.blankj.utilcode.util.BusUtils;
 import com.hstmpl.dialog.LoadingDialog;
-import com.hstmpl.util.ActivityUtils;
-
-import gorden.rxbus2.RxBus;
 
 public abstract class BaseActivity<DataBinding extends ViewDataBinding> extends AppCompatActivity {
 
@@ -22,8 +20,7 @@ public abstract class BaseActivity<DataBinding extends ViewDataBinding> extends 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        RxBus.get().register(this);
-        ActivityUtils.addActivity(this);
+        BusUtils.register(this);
         mContext = this;
         mDataBinding = DataBindingUtil.setContentView(mContext, getLayoutId());
         mDataBinding.setLifecycleOwner(this);
@@ -68,8 +65,7 @@ public abstract class BaseActivity<DataBinding extends ViewDataBinding> extends 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        RxBus.get().unRegister(this);
-        ActivityUtils.removeActivity(this);
+        BusUtils.unregister(this);
         mContext = null;
     }
 }

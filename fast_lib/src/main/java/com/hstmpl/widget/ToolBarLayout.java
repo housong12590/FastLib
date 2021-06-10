@@ -17,8 +17,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 
+import com.blankj.utilcode.util.SizeUtils;
 import com.hstmpl.fastlib.R;
-import com.hstmpl.util.DensityUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -398,7 +398,7 @@ public class ToolBarLayout extends LinearLayout implements View.OnClickListener 
                 button.setCompoundDrawables(null, null, null, drawable);
                 break;
         }
-        button.setCompoundDrawablePadding(DensityUtils.dp2px(getContext(), padding));
+        button.setCompoundDrawablePadding(SizeUtils.dp2px(padding));
         return params;
     }
 

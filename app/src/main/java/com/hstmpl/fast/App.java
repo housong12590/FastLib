@@ -2,7 +2,7 @@ package com.hstmpl.fast;
 
 import android.app.Application;
 
-import com.hstmpl.util.Utils;
+import com.blankj.utilcode.util.Utils;
 
 public class App extends Application {
     @Override

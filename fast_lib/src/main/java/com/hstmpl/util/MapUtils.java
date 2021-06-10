@@ -3,9 +3,7 @@ package com.hstmpl.util;
 
 import com.hstmpl.convert.Convert;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class MapUtils {
@@ -30,7 +28,7 @@ public class MapUtils {
         }
         return result;
     }
-    
+
     public static void clear(Map<?, ?>... maps) {
         for (Map<?, ?> map : maps) {
             if (!isEmpty(map)) map.clear();
@@ -73,7 +71,7 @@ public class MapUtils {
         Object value = map.get(key);
         if (value == null) return defValue;
         if (value instanceof Integer) return (Integer) value;
-        return Convert.toDouble(value).intValue();
+        return Convert.toInt(value, defValue);
     }
 
     public static <K> Boolean getBool(Map<?, ?> map, K key) {
@@ -110,67 +108,28 @@ public class MapUtils {
         return Convert.toShort(map.get(key), defValue);
     }
 
-    public static <T, K> T getBean(Map<?, ?> map, K key, Class<T> cls) {
-        Object value = map.get(key);
-        if (value == null) return null;
-        if (cls.isInstance(value)) {
-            //noinspection unchecked
-            return (T) value;
-        }
-        if (value instanceof Map) {
-            return BeanUtils.mapToBean((Map<?, ?>) value, cls);
-        }
-        return BeanUtils.copyProperties(value, cls);
-    }
-
-    @SuppressWarnings("unchecked")
-    public static <K> Map<String, Object> getMap(Map<?, ?> map, K key) {
-        Object value = map.get(key);
-        if (value == null) return null;
-        if (value instanceof Map) {
-            return (Map<String, Object>) value;
-        }
-        return BeanUtils.toMap(value);
-    }
-
-    public static <T> List<T> getList(Map<?, ?> map, String key, Class<T> cls) {
-        return getList(map, key, cls, null);
-    }
-
-    public static <T, K> List<T> getList(Map<?, ?> map, K key, Class<T> cls, List<T> defValue) {
-        Object value = map.get(key);
-        if (value == null) return defValue;
-        if (value instanceof List) return castList((List<?>) value, cls);
-        throw new ClassCastException(value.getClass() + " can not cast List");
-    }
-
     public static <T> T getValue(Map<?, ?> map, String key) {
         return getValue(map, key, null);
     }
 
+    @SuppressWarnings("unchecked")
     public static <T> T getValue(Map<?, ?> map, String key, T defValue) {
         T value = Expression.of(key).getValue(map);
         if (value == null) {
             return defValue;
         }
+        if (defValue == null) {
+            return value;
+        }
+        Class<?> targetClass = defValue.getClass();
+        if (targetClass.isInstance(value)) {
+            return value;
+        }
+        Object newValue = Convert.cast(targetClass, value);
+        if (newValue != null) {
+            return (T) newValue;
+        }
         return value;
     }
-
-    @SuppressWarnings("unchecked")
-    public static <T> List<T> castList(List<?> list, Class<T> cls) {
-        List<T> _list = new ArrayList<>();
-        for (Object o : list) {
-            if (cls.isInstance(o)) {
-                //pass
-            } else if (ClassUtils.isPrimitive(cls)) {
-                o = Convert.cast(cls, o);
-            } else if (o instanceof Map) {
-                o = BeanUtils.mapToBean((Map<?, ?>) o, cls);
-            } else {
-                o = BeanUtils.copyProperties(o, cls);
-            }
-            _list.add((T) o);
-        }
-        return _list;
-    }
 }
+

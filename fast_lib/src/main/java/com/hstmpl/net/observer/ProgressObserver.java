@@ -1,9 +1,9 @@
 package com.hstmpl.net.observer;
 
 
+import com.blankj.utilcode.util.ActivityUtils;
 import com.hstmpl.net.dialog.ProgressCancelListener;
 import com.hstmpl.net.dialog.ProgressDialogHandler;
-import com.hstmpl.util.ActivityUtils;
 
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;

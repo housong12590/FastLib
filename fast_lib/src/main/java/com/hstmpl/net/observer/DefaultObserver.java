@@ -1,10 +1,10 @@
 package com.hstmpl.net.observer;
 
+import com.blankj.utilcode.util.LogUtils;
+import com.blankj.utilcode.util.ToastUtils;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.stream.MalformedJsonException;
 import com.hstmpl.net.error.RequestError;
-import com.hstmpl.util.LogUtils;
-import com.hstmpl.util.ToastUtils;
 
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
@@ -37,15 +37,15 @@ public abstract class DefaultObserver<T> implements SingleObserver<T> {
     @Override
     public void onError(Throwable e) {
         if (e instanceof ConnectException || e instanceof UnknownHostException) {
-            ToastUtils.show("请检查当前的网络环境！");
+            ToastUtils.showShort("请检查当前的网络环境！");
         } else if (e instanceof SocketTimeoutException) {
-            ToastUtils.show("网络连接超时,请稍候重试!");
+            ToastUtils.showShort("网络连接超时,请稍候重试!");
         } else if (e instanceof HttpException) {
-            ToastUtils.show("服务器繁忙,请稍候再试!");
+            ToastUtils.showShort("服务器繁忙,请稍候再试!");
         } else if (e instanceof MalformedJsonException || e instanceof JsonSyntaxException) {
             LogUtils.e("json解析异常---->>>" + e.getMessage());
         } else if (e instanceof RequestError) {
-            ToastUtils.show(e.getMessage());
+            ToastUtils.showShort(e.getMessage());
         }
         e.printStackTrace();
     }

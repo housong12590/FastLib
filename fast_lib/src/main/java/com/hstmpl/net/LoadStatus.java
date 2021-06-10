@@ -14,7 +14,7 @@ public enum LoadStatus {
      */
     LOAD_MORE(2);
 
-    private int value;
+    private final int value;
 
     LoadStatus(int value) {
         this.value = value;

@@ -1,7 +1,7 @@
 package com.hstmpl.broadcast;
 
 
-import com.hstmpl.util.NetworkUtils;
+import com.blankj.utilcode.util.NetworkUtils;
 
 public interface NetworkChangeListener {
 

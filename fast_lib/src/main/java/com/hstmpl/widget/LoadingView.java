@@ -10,8 +10,8 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
 
+import com.blankj.utilcode.util.SizeUtils;
 import com.hstmpl.fastlib.R;
-import com.hstmpl.util.DensityUtils;
 
 
 /**
@@ -38,7 +38,7 @@ public class LoadingView extends View {
     public LoadingView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         TypedArray array = getContext().obtainStyledAttributes(attrs, R.styleable.LoadingView, defStyleAttr, 0);
-        mSize = array.getDimensionPixelSize(R.styleable.LoadingView_loading_size, DensityUtils.dp2px(context, 18));
+        mSize = array.getDimensionPixelSize(R.styleable.LoadingView_loading_size, SizeUtils.dp2px(18));
         mPaintColor = array.getColor(R.styleable.LoadingView_loading_color, Color.GRAY);
         array.recycle();
         initPaint();

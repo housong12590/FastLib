@@ -1,7 +1,7 @@
 package com.hstmpl.convert;
 
 
-import com.hstmpl.util.LogUtils;
+import com.blankj.utilcode.util.LogUtils;
 
 import static com.hstmpl.convert.IntegerConverter.FALSE_VAL;
 import static com.hstmpl.convert.IntegerConverter.TRUE_VAL;

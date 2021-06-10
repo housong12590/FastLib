@@ -1,7 +1,7 @@
 package com.hstmpl.convert;
 
 
-import com.hstmpl.util.LogUtils;
+import com.blankj.utilcode.util.LogUtils;
 
 public class DoubleConverter implements Converter<Double> {
 

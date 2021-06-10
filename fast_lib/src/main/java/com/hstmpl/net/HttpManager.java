@@ -1,6 +1,7 @@
 package com.hstmpl.net;
 
 
+import com.blankj.utilcode.util.StringUtils;
 import com.hstmpl.net.annotation.Service;
 import com.hstmpl.net.proxy.SchedulersProxy;
 
@@ -22,6 +23,7 @@ public class HttpManager {
     private static HttpManager instance;
     private OkHttpClient mHttpClient;
     private final Map<String, Retrofit> mClientMaps;
+    private Map<Class<?>, String> mBaseUrlMap;
 
     private static HttpManager getInstance() {
         if (instance == null) {
@@ -48,6 +50,7 @@ public class HttpManager {
 
     public HttpManager() {
         mClientMaps = new HashMap<>();
+        mBaseUrlMap = new HashMap<>();
         initDefaultClient();
     }
 
@@ -56,6 +59,12 @@ public class HttpManager {
                 .readTimeout(60, TimeUnit.SECONDS)
                 .writeTimeout(60, TimeUnit.SECONDS)
                 .build();
+    }
+
+    public void setBaseUrlMap(Map<Class<?>, String> baseUrlMap) {
+        if (baseUrlMap != null) {
+            this.mBaseUrlMap = baseUrlMap;
+        }
     }
 
     public <T> T getService0(Class<T> clazz) {
@@ -67,10 +76,14 @@ public class HttpManager {
         retrofit = mClientMaps.get(clazz.getName());
         if (retrofit == null) {
             OkHttpClient httpClient = getHttpClient(service);
+            String baseUrl = mBaseUrlMap.get(clazz);
+            if (StringUtils.isEmpty(baseUrl)) {
+                baseUrl = service.baseUrl();
+            }
             retrofit = new Retrofit.Builder().client(httpClient)
                     .addConverterFactory(GsonConverterFactory.create())
                     .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                    .baseUrl(service.baseUrl()).build();
+                    .baseUrl(baseUrl).build();
             mClientMaps.put(clazz.getName(), retrofit);
         }
         T apiService = retrofit.create(clazz);

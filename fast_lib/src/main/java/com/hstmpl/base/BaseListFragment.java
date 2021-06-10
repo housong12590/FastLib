@@ -19,6 +19,8 @@ import com.hstmpl.util.ColorUtils;
 import com.hstmpl.widget.CustomLoadMoreView;
 import com.hstmpl.widget.MultipleStatusLayout;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -107,7 +109,7 @@ public abstract class BaseListFragment<T> extends DelayFragment<FragmentBaseList
             }
 
             @Override
-            public void onSuccess(List<T> ts) {
+            public void onSuccess(@NotNull List<T> ts) {
                 if (status == LoadStatus.LOADING) {
                     mData = ts;
                     mMultipleStatusLayout.showContentView();

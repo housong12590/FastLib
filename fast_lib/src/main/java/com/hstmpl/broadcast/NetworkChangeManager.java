@@ -6,8 +6,8 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 
-import com.hstmpl.util.LogUtils;
-import com.hstmpl.util.NetworkUtils;
+import com.blankj.utilcode.util.LogUtils;
+import com.blankj.utilcode.util.NetworkUtils;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -18,7 +18,7 @@ import java.util.Set;
 public class NetworkChangeManager {
 
     private static final Set<NetworkChangeListener> observers = new HashSet<>();
-    private static NetworkChangeReceiver receiver = new NetworkChangeReceiver();
+    private static final NetworkChangeReceiver receiver = new NetworkChangeReceiver();
 
     private static void notifyObservers(NetworkUtils.NetworkType networkType) {
         for (NetworkChangeListener observer : observers) {

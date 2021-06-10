@@ -13,11 +13,10 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.blankj.utilcode.util.BusUtils;
 import com.hstmpl.net.LoadStatus;
 
 import org.jetbrains.annotations.NotNull;
-
-import gorden.rxbus2.RxBus;
 
 public abstract class BaseFragment<DataBinding extends ViewDataBinding> extends Fragment {
 
@@ -35,7 +34,7 @@ public abstract class BaseFragment<DataBinding extends ViewDataBinding> extends 
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Bundle arguments = getArguments();
-        RxBus.get().register(this);
+        BusUtils.register(this);
         if (arguments != null) {
             parseIntent(arguments);
         }
@@ -81,7 +80,7 @@ public abstract class BaseFragment<DataBinding extends ViewDataBinding> extends 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        RxBus.get().unRegister(this);
+        BusUtils.unregister(this);
     }
 
 

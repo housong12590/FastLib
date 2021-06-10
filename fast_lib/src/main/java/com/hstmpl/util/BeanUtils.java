@@ -12,17 +12,12 @@ public class BeanUtils {
     public static <T> T copyProperties(Object source, Class<T> cls) {
         try {
             T target = cls.newInstance();
-            copyProperties(source, target);
+            copyProperties0(source, target);
             return target;
         } catch (InstantiationException | IllegalAccessException e) {
             e.printStackTrace();
         }
         return null;
-    }
-
-
-    public static void copyProperties(Object source, Object target) {
-        copyProperties0(source, target);
     }
 
     private static void copyProperties0(Object source, Object target) {
@@ -65,16 +60,15 @@ public class BeanUtils {
     }
 
     public static Map<String, Object> toMap(Object bean) {
-        Map<String, Object> map = new HashMap<>();
-        toMap(bean, map);
-        return map;
+        return toMap(bean, new HashMap<>());
     }
 
-    public static void toMap(Object bean, Map<String, Object> map) {
+    public static Map<String, Object> toMap(Object bean, Map<String, Object> map) {
         for (Field field : FieldUtils.getFields(bean)) {
             Object value = FieldUtils.getValue(field, bean);
             map.put(field.getName(), value);
         }
+        return map;
     }
 
 }
