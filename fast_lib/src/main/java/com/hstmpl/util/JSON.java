@@ -89,6 +89,7 @@ public class JSON {
         public static final Gson GSON = new GsonBuilder()
                 .setDateFormat("yyyy-MM-dd HH:mm:ss")
                 .serializeNulls()
+                .disableHtmlEscaping()
                 .excludeFieldsWithModifiers(Modifier.STATIC, Modifier.FINAL)
                 .create();
 
