@@ -2,6 +2,8 @@ package com.hstmpl.net;
 
 public abstract class Result<T> {
 
+    public static int SUCCESS_CODE = 200;
+
     private int code;
     private String msg;
     private T data;
@@ -31,6 +33,6 @@ public abstract class Result<T> {
     }
 
     public boolean isSuccess() {
-        return this.code == 200;
+        return this.code == SUCCESS_CODE;
     }
 }
